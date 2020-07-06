@@ -1,6 +1,7 @@
 # Revue de littérature
 Notes de lectures d'articles et de rapports scientifiques
 
+
 ## aria/dataless intent recognition
 **Problème** : absence de données annotées pour entrainer des algo de NLP
 
@@ -12,6 +13,7 @@ Notes de lectures d'articles et de rapports scientifiques
   * bon si textes brutes dispo et expertise de mots-clés dispo
 
 ### 2019 - slide - NLP from scratch - Solving the cold start problem for NLP [EN COURS]
+
 
 ### 2019_ESWC_KB_Short_Text_Classification_Using_Entity_and_Category_Embedding [EN COURS]
 Ce travail propose d'adresser l'absence de données annotées. La technique consiste à utiliser la similarité "sémantique" entre catégories et textes en s'appuyant sur des techniques de **graph embedding**.
@@ -57,8 +59,66 @@ Ce travail propose d'adresser l'absence de données annotées. La technique cons
 **Voir aussi**:
   * aria/dataless intent recognition/2019 Knowledge-Based Dataless Text Categorization
   * aria/dataless intent recognition/2019 Knowledge-Based Short Text Categorization Using Entityand Category Embedding
+  * 2018 TECNE - Knowledge Based Text ClassificationUsing Network Embeddings
+
+
+### 2020 Description Based Text Classification with Reinforcement Learning [MIS DE COTE]
+**L'article n'est pas dataless, il utilise la description pour retrouver le passage pertinent à classifier c'est tout. le modèle reste gourmand en données annotées**
+
+**Nom de la méthode** : SQuAD-style machine reading comprehension task 
+
+Ce papier décrit la classification de texte sans données annotées comme prenant *en entrée* la **description de la catégorie** et le **texte**, pour déterminer si le texte est de la catégorie.
+Plusieurs thèmes apparaissent dans un document, aussi bien que plusieurs sentiments sur différents aspects. La phlosophie des auteurs est que **le modèle doit apprendre à associer le texte pertinent à l'aspect ciblé, et ensuite décider du sentiment**. L'association est formalisée et permet de dire **explicitement** au modèle ce qu'il doit classifier.
+
+
+### 2018 A Pseudo Label based Dataless NB Bayes Algorithm for Text Classification with Seed Words [EN COURS]
+
+Les auteurs soutiennent que la production de données annotées est trop exigente pour l'effort humain même en petite quantité. L'approche proposée se base sur une tâche qu'ils estiment plus facile, la proposition de **mots "semences"** représentatifs des labels. L'algorithme apprend directement à partir des documents non annotés et des mots "semences".
+
+**Nom de la méthode** : PL-DNB (*Pseudo-Label based dataless Naive Bayes classifier*)
+
+**Données dispo au départ**: 
+* S^L : mots clés sélectionnés manuellement à partir des labels de catégories (1 seul en moyenne)
+* S^D : mots clés sélectionnés manuellement par expertise de domaine à partir d'une liste produite automatiquement (non supervisée)
+* D_U : ensemble de documents non annotés
+
+**Application : Bayésien Naïf sémi-supervisé**
+* **sémi-supervisé** : appris à la fois à partir de données annotées et non annotées
+* y = \max_{c_i \in C}P(y = c_i|d)
+* P(y = c_i|d) ~= P(y = c_i)\prod_{j=1}^{||W} P(w_j|y = c_i)^{N_{d,w_j}}
+* N_{d,w_j}: nb occurrence de w_j dans d
+
+**Entraînement**:
+L'entraînement est une boucle de génération ou màj d'annotations et d'estimation des paramètres du classifieur bayésien sémi-supervisé.
+1. **génération et màj d'annotations de données annotées D_L**
+  * *Initialisation*
+  
+2. **Estimation des paramètres \theta={P(y), P(w_j|y)}) du Bayésien Naïf sémi-supervisé : Expectation-Maximisation (EM)**
+
+
+### medium_com_ai_medecindirect_unsupervised_text_classification [WEB][FINI]
+
+**Définitions**
+*  **StackedEmbeddings** (vecteurs empilés) : concaténation des embeddings d'un mot obtenus à partir de différentes techniques (Glove, w2v, Elmo, BERT, fastText, etc.)
+
+**Hypothèse** : apprendre d'une description est suffisant pour un homme et devrait l'être aussi pour la machine. On ne devrait pas forcément nécessiter une grande masse de données annotées pour qu'un système reconnaisse un concept.
+
+**Tâche** : classer les feedbacks de clients de MédecinDirect dans 11 catégories prédéfinies (indiquant probablement la raison de l'insatisfaction ou du commentaire du client)
+
+**Problème** : très faible quantité de données annotées, très déséquilibrées (une classe avec seulement 3 exemples sur 200 pour 11 catégories). Par conséquent, la configuration n'est pas bonne pour de la classificaton supervisée traditionnelle.
+
+**Approche** : 
+
+*  utiliser les embeddings de mots et construire le vecteur vecteurs empilés d'embeddings pour une phrase (requête : CommentVector) ou un document (description de catégorie faite de 3 phrases synthétiques exemples : CategoryVector) (documentEmbeddings).
+*  calculer la similarité cosinus entre les vecteurs de requêtes et ceux de la catégorie
+*  la catégorie ayant le score de similarité le plus élevé est retenu pour la requête, s'il n'y en a pas, alors la catégorie de la requête est définie comme "incertaine" (un label en plus).
+*  Utiliser les exemples annotées pour déterminer les hyperparamètres : type de documentEmbeddings, le type de description à adopter pour les labels, et à quel point le model doit être, etc.
+
+
+
 
 ## aria/less annotation/Weak supervision
+
 
 ### 2019 A clinical text classification paradigm using weak supervision and deep representation [FINI]
 L'article présente une méthode simple pour adresser l'absence de données annotées pour une tâche de classification de textes de rapports cliniques. Il propose de construire une base d'entraînement à l'aide d'une méthode à base de REGEX. Le principe est de conclure en l'appartenance d'un document à une catégorie sir une phrase de ce doc comprend un mot-clé ou une combinaison de mots-clés prédéfinis pour cette catégorie (e.g. **uses tobacco** pour la classe **smoker**). Le jeu d'entraînement est donc potentiellement bruité et ne couvre que les motifs de mots-clés prédéfinis. Pour être robuste aux mots-clés inconnus, le modèle vectoriel emploi les embeddings de mots qui rapprochent les mots inconnus des connus. En effet, le vecteur d'un texte est la moyenne des embeddings des mots qu'il comprend (occurrence ou **type** (le doc est défini comme un ensemble de mots)?). Les expérimentations montrent de très bonnes performances en classification binaire avec le CNN (F1 à 0.92 & 0.97  pour 0.91 & 0.93 pour les règles) avec la quantité de données d'entraînement disponible (31861  et 22471) mais moins bonnes (0.77 pour 0.88 pour les règles) en multi-classe (5 classes) pour deux raisons : (1) faible quantité de données (389), (2) un important déséquilibre du jeu annoté (deux classes couvrant seuelement 5%).
@@ -69,6 +129,19 @@ L'article présente une méthode simple pour adresser l'absence de données anno
   * quantité suffisante de textes à annoter pour le deep learning (CNN)
 *  **Avantage**:
   * l'augmentation de données annotées améliorera les performances de classification
+
+
+## aria/knowledge graph
+
+### 2017 Graph-based_Text_Representations_Tutorial_EMNLP_2017 [TURORIEL][FINI][A RESUMER]
+
+**Objectifs**: Booster la fouille de textes, le TALN, et la RI avec les graphes
+
+**Problèmes de la représentation par BoW**: hypothèse d'indépendance entre termes et pondération par fréquence de termes
+
+**Intérêt de la représentation de texte par graphe**: capturer la **dépendance** entre les termes, de leur **ordre** et la **distance** entre eux.
+
+
 
 ## aria/query analysis
 * 2018_Chapter_UnderstandingInformationNeeds [PRIORITAIRE]
