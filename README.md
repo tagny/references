@@ -116,7 +116,6 @@ L'entraînement est une boucle de génération ou màj d'annotations et d'estima
 
 
 
-
 ## aria/less annotation/Weak supervision
 
 
@@ -144,8 +143,18 @@ L'article présente une méthode simple pour adresser l'absence de données anno
 
 
 ## aria/query analysis
-* 2018_Chapter_UnderstandingInformationNeeds [PRIORITAIRE]
 
+### 2018_Chapter_UnderstandingInformationNeeds [PRIORITAIRE]
+
+en RI, la compréhension de l'information nécessitée par l'utilisateur passe par une bonne compréhension de sa requête. Pour cela, il existent des techniques comme la classification de la requête suivant des buts de niveau élevé (intention), segmentation en parties allant ensemble (e.g. noms composés), interpréter la structure de la requête, reconaître et désambiguïser les entités mentionnées, déterminer si un service spécifique ou un segment/domaine des contenus en ligne (*verticals*, e.g. shopping, voyage, recherche d'emploi, etc.) doit être invoqué.
+
+#### Analyse sémantique de requête
+
+**Classification de requête**
+
+**Annotation de requête**
+
+**Interprétation de requête**
 
 
 
