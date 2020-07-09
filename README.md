@@ -144,7 +144,7 @@ L'article présente une méthode simple pour adresser l'absence de données anno
 
 ## aria/query analysis
 
-### 2018_Chapter_UnderstandingInformationNeeds [PRIORITAIRE]
+### 2018_Chapter_UnderstandingInformationNeeds [SUSPENDU]
 
 en RI, la compréhension de l'information nécessitée par l'utilisateur passe par une bonne compréhension de sa requête. Pour cela, il existent des techniques comme la classification de la requête suivant des buts de niveau élevé (intention), segmentation en parties allant ensemble (e.g. noms composés), interpréter la structure de la requête, reconaître et désambiguïser les entités mentionnées, déterminer si un service spécifique ou un segment/domaine des contenus en ligne (*verticals*, e.g. shopping, voyage, recherche d'emploi, etc.) doit être invoqué.
 
@@ -156,5 +156,13 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 
 **Interprétation de requête**
 
+## aria\short texts similarity\metric learning
 
+### 2019 ATutorialonDistanceMetricLearning-MathematicalFoundationsAlgorithmsandExperiments [EN COURS]
 
+*  Une distance standard peut ignorer des propriétés importantes dans le dataset = son utilisation par un apprentissage rendant ce dernier non optimal
+*  L'objectif de l'apprentissage d'une distance, c'est de rapprocher autant que possible les objets similaires, tout en éloignant les différents, pour améliorer la qualité des applications 
+*  Les bases de l'apprentissage de distance sont :
+  *  **l'analyse convexe** : pour la présentation et la résolution de pbs d'obtimisation (estimation de paramètres)
+  *  **l'analyse matricielle** : pour la compréhension de la discipline, la paramétrisation des algo, et l'obtimisation par les vecteurs propres
+  *  **la théorie de l'information** : qui a motivé plusieurs des algorithmes
