@@ -11,6 +11,38 @@ Notes de lectures d'articles et de rapports scientifiques
   * bon si données non annotées indisponibles
 * **weak supervision** : générer automatiquement des données (par exemple avec un système de règles REGEX)
   * bon si textes brutes dispo et expertise de mots-clés dispo
+  
+### 2015 slides - Text Classification without Supervision - Incorporating World Knowledge and Domain Adaptation[EN COURS]
+
+**Existant**:
+*  les défis de la catégorisation de textes [**en production**]
+  * Annotation par des expert du domaine pour des problèmes de grande taille
+  * Domaines et tâches divers : thèmes, langages, etc.
+  * des textes court et bruités: tweets, requêtes, etc.
+*  Approches traditionnelles : adaptation au domaine cible (i.e. sémi-supervision, transfer learning et zero-shot learning )
+    *  mais difficile de déterminer quel est le domaine cible ? e.g. distinguer le *sport* du *divertissement*
+
+**Solution proposée 2008 & 2014**:
+* **apprentissage activé par les connaissances** au travers de millions d'entités et concepts, de milliards de relations
+  * Wikipedia, freebase, Yago, ProBase, DBpedia
+*  Hypothèse : **les labels portent beaucoup d'information** (**ET NOUS AVONS EN PLUS DES DESCRIPTIONS**)
+*  Solution 1: 
+  1. grâce aux connaissances du domaine, représenter les labels et documents dans le même espace
+  2. calculer les similarités entre document et label
+* choisir les labels
+
+**Difficultés liées à l'utilisation des connaissances**
+*  **phase apprentissage** :  Monter en charge, adaptation au domaine, classes en domaine ouvert ==> **présenter quelques exemples intéressants
+*  **phase d'inférence** spécification des connaissances; désambiguïsation,  
+  *  Utilisation de la similarité cosinus, Average (Best toujurs), Max matching, Hungarian matching (plus on a de concept, mieux il est)
+*  **phase de représentation**: représentation des données différentes de celle des connaissances ==> **comparer différentes représentations**
+  * polysémie et synonymie
+
+**Voir aussi**:
+* ./2014 On Dataless Hierarchical Text Classification
+* ./2008 Importance of Semantic Representation - Dataless Classification
+* ./2014 Transfer Understanding from Head Queries to Tail Queries [TO READ]
+* ./2015 Open Domain Short Text Conceptualization [TO READ]
 
 ### 2019 - slide - NLP from scratch - Solving the cold start problem for NLP [EN COURS]
 
