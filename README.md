@@ -44,6 +44,18 @@ Notes de lectures d'articles et de rapports scientifiques
 * ./2014 Transfer Understanding from Head Queries to Tail Queries [TO READ]
 * ./2015 Open Domain Short Text Conceptualization [TO READ]
 
+### 2014 Transfer Understanding from Head Queries to Tail Queries [EN COURS]
+
+* En recherche d'info, le plus grand défi réside dans la gestion des **requêtes de "queue"**
+*  **requête de "queue"** : requête qui survient très rarement (**REFERENCE POTENTIELLE AUX MOTIFS RAREMENT SOLLICITES DANS NOTRE CAS => FAIBLEMENT REPRESENTEES DANS LES LOGS => DIFFICILE DE LES APPRENDRE PAR DES ALGORITHME D'ORDONNEMENT**) 
+*  Les **requêtes de "tête"** sont facile à gérer car leurs intentions sont mises en évidence par le grand nombre de "données clic" (i.e. **de sollicitation**)
+*  Le problème est de savoir *COMMENT MIEUX ESTIMER LES INTENTIONS D'UNE REQUETE*
+*  LITTERATURE : **la pertinence d'une url pour une requête q est estimée par la similarité moyenne entre elle et les anciennes requêtes q_i pondérée par le nombre de clics correspondants sur cette url lorsqu'elles ont été soumises**
+  * PB : requete = **texte court** ==> insuffisance d'info contextuelle pour comparer la sémantique de 2 textes
+  * LIMITE les ajustements avec la modélisation thématique ou le DNN extrait la sémantique latente ou hiérarchique des requêtes mais sont lentes à entrainer et à tester
+*  HYPOTHESE : **il est beaucoup plus utile de considérer ensemble la sémantique sur les anciennes requêtes et les clics d'utilisateurs, pour relier des requêtes différentes à la surface (lexique).**
+*  CONDITION & DEFI : **parvenir automatiquement** à correctement segmenter les requêtes en sous-expressions et identifier leurs concepts
+
 ### 2019 - slide - NLP from scratch - Solving the cold start problem for NLP [EN COURS]
 
 
