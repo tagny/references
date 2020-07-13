@@ -60,7 +60,11 @@ Notes de lectures d'articles et de rapports scientifiques
 
 
 ### 2019_ESWC_KB_Short_Text_Classification_Using_Entity_and_Category_Embedding [EN COURS]
+
+**CET ARTICLE VEND UNE APPROCHE QUI PERMET DE SE PRIVER D'ANNOTATION DE DONNEES D'ENTRAINEMENT GRACE A UNE KB, MAIS ELLE NE MARCHE QUE SI LES CATEGORIES DE LA TACHE CORRESPONDENT A DES CATEGORIES DE WIKIPEDIA ==> CE QUI REND DIFFICILE LA GENERALISABILITE DE LA METHODE**
+
 Ce travail propose d'adresser l'absence de données annotées. La technique consiste à utiliser la similarité "sémantique" entre catégories et textes en s'appuyant sur des techniques de **graph embedding**.
+
 **Définitions et notation**
 * t : texte à classifier
 * **entité e** : un lien hypertexte de Wikipedia indexé par un texte de lien dans le dico préfabriqué **Anchor-Text Dictionary** (e)
@@ -70,26 +74,46 @@ Ce travail propose d'adresser l'absence de données annotées. La technique cons
 * **Popularité P(e) de E** : Probabilité qu'un texte pris au hasard contienne e
 * N : nombre d'entités dans le dico
 * **Relation entité-catégorie P(c|e)** 
-* **e est directement associée à la catégorie c, notée c_{a_e}** : e apparait dans un article de Wikipedia qui a la comme catégorie associée c_{a_e}
+* **e est directement associée à la catégorie c, notée c_{a_e}** : e apparait dans un article de Wikipedia qui a comme catégorie associée c_{a_e}
 * C_{a_e} : ensemble des catégories directement associées à e
 * sim(c,e) : similarité cosinus entre les vecteurs de c et e dans l'espace d'embedding
 * A_{c_{a_e}} : ensemble des ancêtres de c_{a_e} dans la structure hiérarchicale des catégories dans la KB (Wikipedia)
 * **Association mention-entité P(m_e|e)** : probabilité d'observer une mention m_e étant donnée l'entité e
 * count(m_e, e) : nombre de lien utilisant m_e comme texte de lien pointant sur e comme destination
 * M_e : ensemble de toutes les mentions qui peuvent se référer à e (qui pointent vers e dans les articles de Wikipédia)
-* **Relation entité-contexte P(C_e|e)** : ...
+* **Relation entité-contexte P(C_e|e)** : 
+* e_c \in C_e : entité à laquelle se réfère une mention du contexte C_e de e 
+* E_{C_e}} ensemble des entités qui peuvent être référencées par les mections de C_e.
+
 
 **Principe (application)**:
 1. Détection des mentions d'**entités** du texte en entrée : n-grammes qui matchent une entrée d'un dico (**Anchor-Text Dictionary**)
 2. Génération, pour chaque mention, d'un ensemble d'**entités** candidates à l'aide du dico préfabriqué (**Anchor-Text Dictionary**)  
   * PETITE IDEE: *indexer le dico comme la librairie [SML](http://www.semantic-measures-library.org) [Harispe et al. , 2013] indexe les mots dans des fichiers multiples: un chunkfile pour les n-grammes débutant par les mêmes 2 premiers chars particulier, indexer les noms de fichiers de  débuts de n-grammes dans un fichier chunk_index)*
-3. Application la **méthode probabiliste** proposée (similaire à un classifieur bayésien P(c|t) ~= P(c,t) = P(c)P(t|c) pour trouver la catégorie la plus pertinente sémantiquement pour le texte. **Comment calculer P(c,t) ?** :
+3. Application de la **méthode probabiliste** proposée (similaire à un classifieur bayésien P(c|t) ~= P(c,t) = P(c)P(t|c) pour trouver la catégorie la plus pertinente sémantiquement pour le texte. **Comment calculer P(c,t) ?** :
   * en utilisant les embeddings d'entités et de catégories appris à partir de Wikipedia  
   * P(c,t) = \sum_{e in E_t} P(e)P(c|e)P(m_e|e)P(C_e|e)
-  * P(e) = \frac{1}{N}
-  * P(c|e) :  si c_{a_e} alors P(c|e) = P(c_{a_e}) = \frac{sim(c_{a_e}, e)}{\sum_{c'_{a_e} \in C_{a_e}} sim(c'_{a_e}, e)} sinon P(c|e) = \sum_{c_{a_e} \in C_{a_e}} P(c_{a_e}|e) P(c|c_{a_e})
+  * P(e) = \frac{1}{N} *entités équiprobables* ou encore *distribution uniforme*
+  * P(c|e) :  si c est un c_{a_e} alors P(c|e) = P(c_{a_e}) = \frac{sim(c_{a_e}, e)}{\sum_{c'_{a_e} \in C_{a_e}} sim(c'_{a_e}, e)} sinon P(c|e) = \sum_{c_{a_e} \in C_{a_e}} P(c_{a_e}|e) P(c|c_{a_e})
   * P(c|c_{a_e}) = si c \in A_{c_{a_e}} alors \frac{1}{|A_{c_{a_e}}|} sinon 0
   * P(m_e|e) = \frac{count(m_e, e)}{\sum_{m'_e \in M_e} count(m'_e, e)}
+  * P(C_e|e) = \sum_{e_c \in E_{C_e}} P(e_c|e)P(m_{e_c}|e_c)
+  * P(e_c | e) = \frac{sim(e_c,e)}{\sum_{e' \in E} sim(e',e)}
+  
+**Embedding d'entités et catégories, pour calculer les similarités**
+*  construction des réseaux de co-occurrence 
+  *  entité-entité : poids = nombre de fois que 2 entités apparaissent dans le même article comme anchor-text (**graphe homogène**)
+  * entité-categorie : poids = nombre de fois que l'entité pointe sur un lien dans un article classée dans la catégorie (bas de l'artcle) (**graphe hétérogène**)
+*  Modèle d'embedding
+  * objectif : **capturer la proximité de second-ordre** : calculé entre 2 sommets en considérant leur sommets partagés (voisins) : plus on partage de voisins plus on devrait être proche
+  * C'est traduit par la proba conditionel P(v_j|v_i) = \frac{exp(-u_j^T * u_i)}{\sum_{v_k \in V} exp(-u_k^T * u_i)} ~= \frac{w_{ij}}{d_i}
+  * V : ensemble des sommets connectés avec v_i
+  * u_i : vecteur du sommet v_i
+  * w_{ij} : poids de l'arête entre v_i et v_j
+  * d_i : degré sortant de v_i
+  * en se basant sur la divergence KL, il faut minimiser O_{homo} = - \sum_{(v_i, v_j) \in E} w_{ij} log(p(v_j | v_i)) => graphe entité-entité
+  * Pour apprendre en même temps sur le graphe heterogène: O_{heter} = O_{ee} + O_{ec}
+
 
 **Préparation (apprentissage)**
 1. **Préfabriquation du Anchor-Text Dictionary** :
@@ -104,6 +128,7 @@ Ce travail propose d'adresser l'absence de données annotées. La technique cons
   * aria/dataless intent recognition/2019 Knowledge-Based Dataless Text Categorization
   * aria/dataless intent recognition/2019 Knowledge-Based Short Text Categorization Using Entityand Category Embedding
   * 2018 TECNE - Knowledge Based Text ClassificationUsing Network Embeddings
+  * Pour la méthode de minimisation de O_{heter}, 2015 PTE-PredictiveTextEmbeddingthroughLarge-scaleHeterogeneousTextNetworks
 
 
 ### 2020 Description Based Text Classification with Reinforcement Learning [MIS DE COTE]
