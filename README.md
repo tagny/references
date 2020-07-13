@@ -59,7 +59,7 @@ Notes de lectures d'articles et de rapports scientifiques
 ### 2019 - slide - NLP from scratch - Solving the cold start problem for NLP [EN COURS]
 
 
-### 2019_ESWC_KB_Short_Text_Classification_Using_Entity_and_Category_Embedding [EN COURS]
+### 2019_ESWC_KB_Short_Text_Classification_Using_Entity_and_Category_Embedding [FINI]
 
 **CET ARTICLE VEND UNE APPROCHE QUI PERMET DE SE PRIVER D'ANNOTATION DE DONNEES D'ENTRAINEMENT GRACE A UNE KB, MAIS ELLE NE MARCHE QUE SI LES CATEGORIES DE LA TACHE CORRESPONDENT A DES CATEGORIES DE WIKIPEDIA ==> CE QUI REND DIFFICILE LA GENERALISABILITE DE LA METHODE**
 
