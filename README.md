@@ -11,31 +11,65 @@ Notes de lectures d'articles et de rapports scientifiques
   * bon si données non annotées indisponibles
 * **weak supervision** : générer automatiquement des données (par exemple avec un système de règles REGEX)
   * bon si textes brutes dispo et expertise de mots-clés dispo
-  
-### 2015 slides - Text Classification without Supervision - Incorporating World Knowledge and Domain Adaptation[EN COURS]
+
+### 2020 Early Forecasting of Text Classification Accuracyand F-Measure with Active Learning [EN COURS]
+**Définitions**
+* **Apprentissage actif**: un apprenant sélectionne les données qui seront annotées avec pour but d'optimiser l'efficience de l'apprentissage (plus de performance avec peu de données) en demandant des efforts d'annotation où il devrait être très utile.
+* **TPC** (*Training Percent Cutoff*): proportion minimale suffisante de données d'entrainement
+* **closest-to-hyperplane selection algorithm** : on sélectionne les *n* échantillons qui sont les plus proches de la frontière de décision (l'hyperplan)
+* **modèle de régression de courbe d'apprentissage** : calcul la performance y (erreur, accuracy, f1, etc.) en fonction du pourcentage ou de la quantité x de données d'entrée, afin de prévoir/anticiper le x=TPC à partir duquel il ne sera plus nécessaire d'augmenter les données d'entrainement (plateau de performance):
+  * linéaire : y = ax+b
+  * logarithmique : y = a log(x) + b
+  * exponential : y = ba^x
+  * power law : y = bx^a
+
+**Existant**
+* **problème**: l'annotation de données d'entrainement, un goulot d'étranglement pour la classif de texte
+* **solution**: minimiser le coût d'annotation avec l'apprentissage actif utilisant des méthodes d'arrêt (lorsque plus d'annotation n'est plus nécessaire)
+  * **conditions d'utilité des mth d'arrêt** : prévoir efficacement la performance des modèles de classif de textes
+  * **Comment**: utilisation de modèles logarithmiques régressés sur une portion des données pendant que l'apprentissage progresse
+  * **Question**: QUELLE PORTION (QUANTITE) DE DONNEES EST NECESSAIRE POUR UNE PREVISION PRECISE ? i.e. PEU => *prévision tôt*  ou BEAUCOUP => *prévision précise* ?
+  * cette question est encore plus importante en apprentissage actif 
+
+**Question de recherche**
+* Quelle est la différence dans la prévision du nombre de données d'entrainement nécessaire ? Algo ? Accurracy vs F1 ? 
+
+**Conclusions**
+* la F1 est plus difficile à prévoir
+* prévision facile pour les arbres de décision, moyen pour les SVM, plus difficile pour le réseaux de neurones.
+* le logarithme de la métrique de performance est le meilleur modèle de prévision
+
+**Mes questions**
+* Anticiper le nombre de données annotées est compréhensible; ça permet de savoir combien de données annotées sont nécessaire pour atteindre une certaine performance. Mais je ne vois pas en quoi c'est utile de prévoir le pourcentage de données ?
+
+**Voir aussi**:
+* 2018 ImpactofBatchSizeonStoppingActiveLearningforTextClassification
+* 2018 SVMActiveLearningAlgorithmswithQuery-by-CommitteeVersusClosest-to-HyperplaneSelection
+
+### 2015 slides - Text Classification without Supervision - Incorporating World Knowledge and Domain Adaptation [EN COURS]
 
 **Existant**:
-*  les défis de la catégorisation de textes [**en production**]
+* les défis de la catégorisation de textes [**en production**]
   * Annotation par des expert du domaine pour des problèmes de grande taille
   * Domaines et tâches divers : thèmes, langages, etc.
   * des textes court et bruités: tweets, requêtes, etc.
-*  Approches traditionnelles : adaptation au domaine cible (i.e. sémi-supervision, transfer learning et zero-shot learning )
-    *  mais difficile de déterminer quel est le domaine cible ? e.g. distinguer le *sport* du *divertissement*
+* Approches traditionnelles : adaptation au domaine cible (i.e. sémi-supervision, transfer learning et zero-shot learning )
+  *  mais difficile de déterminer quel est le domaine cible ? e.g. distinguer le *sport* du *divertissement*
 
 **Solution proposée 2008 & 2014**:
 * **apprentissage activé par les connaissances** au travers de millions d'entités et concepts, de milliards de relations
   * Wikipedia, freebase, Yago, ProBase, DBpedia
-*  Hypothèse : **les labels portent beaucoup d'information** (**ET NOUS AVONS EN PLUS DES DESCRIPTIONS**)
-*  Solution 1: 
+* Hypothèse : **les labels portent beaucoup d'information** (**ET NOUS AVONS EN PLUS DES DESCRIPTIONS**)
+* Solution 1: 
   1. grâce aux connaissances du domaine, représenter les labels et documents dans le même espace
   2. calculer les similarités entre document et label
 * choisir les labels
 
 **Difficultés liées à l'utilisation des connaissances**
-*  **phase apprentissage** :  Monter en charge, adaptation au domaine, classes en domaine ouvert ==> **présenter quelques exemples intéressants
-*  **phase d'inférence** spécification des connaissances; désambiguïsation,  
-  *  Utilisation de la similarité cosinus, Average (Best toujurs), Max matching, Hungarian matching (plus on a de concept, mieux il est)
-*  **phase de représentation**: représentation des données différentes de celle des connaissances ==> **comparer différentes représentations**
+* **phase apprentissage** :  Monter en charge, adaptation au domaine, classes en domaine ouvert ==> **présenter quelques exemples intéressants
+* **phase d'inférence** spécification des connaissances; désambiguïsation,  
+  * Utilisation de la similarité cosinus, Average (Best toujurs), Max matching, Hungarian matching (plus on a de concept, mieux il est)
+* **phase de représentation**: représentation des données différentes de celle des connaissances ==> **comparer différentes représentations**
   * polysémie et synonymie
 
 **Voir aussi**:
@@ -47,14 +81,14 @@ Notes de lectures d'articles et de rapports scientifiques
 ### 2014 Transfer Understanding from Head Queries to Tail Queries [EN COURS]
 
 * En recherche d'info, le plus grand défi réside dans la gestion des **requêtes de "queue"**
-*  **requête de "queue"** : requête qui survient très rarement (**REFERENCE POTENTIELLE AUX MOTIFS RAREMENT SOLLICITES DANS NOTRE CAS => FAIBLEMENT REPRESENTEES DANS LES LOGS => DIFFICILE DE LES APPRENDRE PAR DES ALGORITHME D'ORDONNEMENT**) 
-*  Les **requêtes de "tête"** sont facile à gérer car leurs intentions sont mises en évidence par le grand nombre de "données clic" (i.e. **de sollicitation**)
-*  Le problème est de savoir *COMMENT MIEUX ESTIMER LES INTENTIONS D'UNE REQUETE*
-*  LITTERATURE : **la pertinence d'une url pour une requête q est estimée par la similarité moyenne entre elle et les anciennes requêtes q_i pondérée par le nombre de clics correspondants sur cette url lorsqu'elles ont été soumises**
+* **requête de "queue"** : requête qui survient très rarement (**REFERENCE POTENTIELLE AUX MOTIFS RAREMENT SOLLICITES DANS NOTRE CAS => FAIBLEMENT REPRESENTEES DANS LES LOGS => DIFFICILE DE LES APPRENDRE PAR DES ALGORITHME D'ORDONNEMENT**) 
+* Les **requêtes de "tête"** sont facile à gérer car leurs intentions sont mises en évidence par le grand nombre de "données clic" (i.e. **de sollicitation**)
+* Le problème est de savoir *COMMENT MIEUX ESTIMER LES INTENTIONS D'UNE REQUETE*
+* LITTERATURE : **la pertinence d'une url pour une requête q est estimée par la similarité moyenne entre elle et les anciennes requêtes q_i pondérée par le nombre de clics correspondants sur cette url lorsqu'elles ont été soumises**
   * PB : requete = **texte court** ==> insuffisance d'info contextuelle pour comparer la sémantique de 2 textes
   * LIMITE les ajustements avec la modélisation thématique ou le DNN extrait la sémantique latente ou hiérarchique des requêtes mais sont lentes à entrainer et à tester
-*  HYPOTHESE : **il est beaucoup plus utile de considérer ensemble la sémantique sur les anciennes requêtes et les clics d'utilisateurs, pour relier des requêtes différentes à la surface (lexique).**
-*  CONDITION & DEFI : **parvenir automatiquement** à correctement segmenter les requêtes en sous-expressions et identifier leurs concepts
+* HYPOTHESE : **il est beaucoup plus utile de considérer ensemble la sémantique sur les anciennes requêtes et les clics d'utilisateurs, pour relier des requêtes différentes à la surface (lexique).**
+* CONDITION & DEFI : **parvenir automatiquement** à correctement segmenter les requêtes en sous-expressions et identifier leurs concepts
 
 ### 2019 - slide - NLP from scratch - Solving the cold start problem for NLP [EN COURS]
 
