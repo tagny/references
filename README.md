@@ -12,7 +12,14 @@ Notes de lectures d'articles et de rapports scientifiques
 * **weak supervision** : générer automatiquement des données (par exemple avec un système de règles REGEX)
   * bon si textes brutes dispo et expertise de mots-clés dispo
 
+
+### 2019 Towards Unsupervised Text Classification Leveraging Experts and Word Embeddings
+
+**solution**
+* 
+
 ### 2020 Early Forecasting of Text Classification Accuracyand F-Measure with Active Learning [EN COURS]
+
 **Définitions**
 * **Apprentissage actif**: un apprenant sélectionne les données qui seront annotées avec pour but d'optimiser l'efficience de l'apprentissage (plus de performance avec peu de données) en demandant des efforts d'annotation où il devrait être très utile.
 * **TPC** (*Training Percent Cutoff*): proportion minimale suffisante de données d'entrainement
