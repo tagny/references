@@ -13,7 +13,18 @@ Notes de lectures d'articles et de rapports scientifiques
   * bon si textes brutes dispo et expertise de mots-clés dispo
 
 
-### 2018 - [GOOD] web - How to Build Your Own Text Classification Model Without Any Training Data [EN COURS]
+### 2018 DatalessTextClassificationATopicModelingApproachwith DocumentManifold [En cours]
+**Problème**: classification sans donnée annotée
+
+**Définitions**
+* **Collecteur de documents** (*document manifold*):
+
+**Existant**
+* PRINCIPE : Entrainement basé sur les mots semences
+* LIMITES : possibilité d'information supervisée **limitée** et **bruitée**
+
+
+### 2018 - [GOOD] web - How to Build Your Own Text Classification Model Without Any Training Data [FINI][MISE EN PRATIQUE INTERROMPUE]
 
 **L'ARTICLE PROPOSE LE WEB SERVICE Custom Classifier SUR UNE API NOMMEE [ParallelDots API](https://www.paralleldots.com/text-analysis-apis) POUR DEVELOPPER UN CLASSIFIEUR A APPRENTISSAGE ZERO SUR DES CATEGORIES PERSONELLES**
 
@@ -36,7 +47,7 @@ Notes de lectures d'articles et de rapports scientifiques
   * **LE SERVICE Custom Classifier EST DEPRECIE ET EST EN COURS DE REDEVELOPPEMENT (juillet 2020) DONC IMPOSSIBLE D'ALLER PLUS LOIN**
 
 
-### 2019 Towards Unsupervised Text Classification Leveraging Experts and Word Embeddings [EN COURS]
+### 2019 Towards Unsupervised Text Classification Leveraging Experts and Word Embeddings [FINI][A RESUMER]
 
 **solution**
 * 
