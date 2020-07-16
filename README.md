@@ -13,7 +13,30 @@ Notes de lectures d'articles et de rapports scientifiques
   * bon si textes brutes dispo et expertise de mots-clés dispo
 
 
-### 2019 Towards Unsupervised Text Classification Leveraging Experts and Word Embeddings
+### 2018 - [GOOD] web - How to Build Your Own Text Classification Model Without Any Training Data [EN COURS]
+
+**L'ARTICLE PROPOSE LE WEB SERVICE Custom Classifier SUR UNE API NOMMEE [ParallelDots API](https://www.paralleldots.com/text-analysis-apis) POUR DEVELOPPER UN CLASSIFIEUR A APPRENTISSAGE ZERO SUR DES CATEGORIES PERSONELLES**
+
+**LE SERVICE Custom Classifier EST DEPRECIE ET EST EN COURS DE REDEVELOPPEMENT (juillet 2020) DONC IMPOSSIBLE D'ALLER PLUS LOIN POUR L'INSTANT**
+
+**Définitions**
+* **apprentissage zéro** (*zero-shot learning*) : c'est être capable de résoudre une tâche malgré n'avoir reçu aucun exemple de cette tâche.
+
+**Avantage du type de problème**
+* réduction du cout et du temps nécessaire pour construire un modèle de classification
+
+**Solution**
+* FEATURES : 
+  * catégories retournées chacune associée de son score de probabilité 
+  * le service web parvient à retrouver avec de bons scores les catégories relatives à la requête même avec une division fine (les championnats européens de foot)
+* SETUP :
+  * [Créer un compte gratuit](https://user.apis.paralleldots.com/signing-up?utm_source=website&utm_medium=footer&utm_campaign=signup) ParallelDots API et se connecter
+  * le plan gratuit est mensuellement limité à **1000 requêtes / jour** à raison de **20 requêtes par minute**
+  * le plan gratuit se renouvelle chaque mois
+  * **LE SERVICE Custom Classifier EST DEPRECIE ET EST EN COURS DE REDEVELOPPEMENT (juillet 2020) DONC IMPOSSIBLE D'ALLER PLUS LOIN**
+
+
+### 2019 Towards Unsupervised Text Classification Leveraging Experts and Word Embeddings [EN COURS]
 
 **solution**
 * 
