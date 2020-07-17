@@ -17,11 +17,16 @@ Notes de lectures d'articles et de rapports scientifiques
 **Problème**: classification sans donnée annotée
 
 **Définitions**
-* **Collecteur de documents** (*document manifold*):
+* **Collecteur de documents** (*document manifold*): structure du voisinage local
 
 **Existant**
 * PRINCIPE : Entrainement basé sur les mots semences
 * LIMITES : possibilité d'information supervisée **limitée** et **bruitée**
+
+**Solution**
+* HYPOTHESE: 
+  * Les docs très similaires tendent à faire partie de la même catégorie
+  * En préservant la structure de voisinage local, les documents d'entrainement peuvent être reliés de tel sorte que ça propage la supervision même si plusieurs d'entre eux ne contiennent pas de mots semences, et ça modifie simultanément l'info d'annotation bruitée uniquement pour les docs contenant des mots semences non pertinents.
 
 
 ### 2018 - [GOOD] web - How to Build Your Own Text Classification Model Without Any Training Data [FINI][MISE EN PRATIQUE INTERROMPUE]
