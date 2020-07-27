@@ -13,6 +13,19 @@ Notes de lectures d'articles et de rapports scientifiques
   * bon si textes brutes dispo et expertise de mots-clés dispo
 
 
+### 2018 Doc2Cube - Allocating Documents to Text Cube without Labeled Data [En cours]
+** Objectifs ** : Construire un modèle Doc2Cube de cubes de textes à partir d'un corpus textuel (D) automatiquement sans données annotées uniquement avec le label comme petit ensemble de termes semences
+** Problème **: difficile d'annoter suffisamment de documents pour la classification
+** Applications ** : 
+* Faciliter les analyses textuelles multidimensionnelles
+* révéler la similarité sémantique entre les labels, les termes et les documents
+* BI : facilité d'exploration du corpus et de recherche des passages/articles désirés avec de simple requêtes
+* biomedical: organisation de corpus en aspects maladies, gènes, protéine; 
+* bioinfo : recherche plus facile d'article scientifique
+** Définition ** 
+* **modèle de cubes de textes (text cube)** : structure multidimensionnelle de données contenant des documents textuels, où les dimensions correspondent à plusieurs aspects (e.g. thème, temps, lieu) du corpus.
+* **schéma prédéfini de cube (C)** : 
+
 ### 2018 DatalessTextClassificationATopicModelingApproachwith DocumentManifold [En cours]
 **Problème**: classification sans donnée annotée
 
@@ -290,7 +303,6 @@ L'article présente une méthode simple pour adresser l'absence de données anno
 **Intérêt de la représentation de texte par graphe**: capturer la **dépendance** entre les termes, de leur **ordre** et la **distance** entre eux.
 
 
-
 ## aria/query analysis
 
 ### 2018_Chapter_UnderstandingInformationNeeds [SUSPENDU]
@@ -315,3 +327,16 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
   *  **l'analyse convexe** : pour la présentation et la résolution de pbs d'obtimisation (estimation de paramètres)
   *  **l'analyse matricielle** : pour la compréhension de la discipline, la paramétrisation des algo, et l'obtimisation par les vecteurs propres
   *  **la théorie de l'information** : qui a motivé plusieurs des algorithmes
+  
+  
+## aria/embeddings
+
+### 2017 SIF-a_simple_but_tough_to_beat_baseline_for_sentence_embeddings [LU][A RESUMER]
+
+### 2018-sent2vec [PRIORITAIRE]
+
+### 2014 doc2vec [PRIORITAIRE]
+
+### 2015 [GOOD PERF] AdaSent-SelfAdaptiveHierarchicalSentenceModel [PRIORITAIRE]
+
+### 2020 SBERT-WK - A Sentence Embedding Method ByDissecting BERT-based Word Models [PRIORITAIRE]
