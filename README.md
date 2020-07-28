@@ -23,8 +23,15 @@ Notes de lectures d'articles et de rapports scientifiques
 * biomedical: organisation de corpus en aspects maladies, gènes, protéine; 
 * bioinfo : recherche plus facile d'article scientifique
 ** Définition ** 
-* **modèle de cubes de textes (text cube)** : structure multidimensionnelle de données contenant des documents textuels, où les dimensions correspondent à plusieurs aspects (e.g. thème, temps, lieu) du corpus.
-* **schéma prédéfini de cube (C)** : 
+* **cube de texte (text cube)** : structure multidimensionnelle de données contenant des documents textuels, où les dimensions correspondent à plusieurs aspects (e.g. thème, temps, lieu) du corpus D.
+* **schéma prédéfini de cube C = (L_1, L_2, ..., L_n) = (thème, temps, lieu)** : ensemble des n dimensions du cube. 
+* celulle de cube (l_{t_1}, l_{t_2}, ..., l_{t_n}) : localisation des documents ayant les labels l_{t_i} dans les dimensions L_i resp.
+* **Tâche de construction de cube**: organiser un grand corpus de texte dans les classes d'un cube i.e. affecter n labels l_{t_1}, l_{t_2}, ..., l_{t_n} à chaque document d où l_{t_i} \in L_i représente la catégory de d dans la dimension L_i (L_i = Thème = {l_{t_1} = sport, l_{t_2} = business, ..., l_{t_n}=movies}
+** Existant et limites**
+* Génération des données d'entrainement limité par l'exigence d'effort d'ingénierie des caractéristiques
+* dataless classification limitée par le risque de limite et non adaptation du corpus externe
+* application de la classification de textes : données d'entrainement annotées nécessaires
+
 
 ### 2018 DatalessTextClassificationATopicModelingApproachwith DocumentManifold [En cours]
 **Problème**: classification sans donnée annotée
