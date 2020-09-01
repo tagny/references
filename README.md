@@ -156,8 +156,19 @@ Notes de lectures d'articles et de rapports scientifiques
 * HYPOTHESE : **il est beaucoup plus utile de considérer ensemble la sémantique sur les anciennes requêtes et les clics d'utilisateurs, pour relier des requêtes différentes à la surface (lexique).**
 * CONDITION & DEFI : **parvenir automatiquement** à correctement segmenter les requêtes en sous-expressions et identifier leurs concepts
 
-### 2019 - slide - NLP from scratch - Solving the cold start problem for NLP [EN COURS]
+### 2019 - slide - NLP from scratch - Solving the cold start problem for NLP [FINI]
 
+**CETTE PRESENTATION RESTREINT LE PB DE COLD START A L'ANNOTATION FACILE ET RAPIDE D'UN JEU DE DONNEES PERTINENT POUR ENTRAINER UN MODELE DE MACHINE LEARNING LE PLUS EFFICACEMENT POSSIBLE. ELLE EXPLORE AINSI L'APPRENTISSAGE FAIBLEMENT SUPERVISE QUI PEUT ETRE AFFINER EN INCLUANT L'HUMAIN DANS LE PROCESSUS D'ANNOTATION PAR L'ACTIVE LEARNING. POUR CET AFFINEMENT, DEUX TECHNIQUES DE SELECTION DE DOCUMENTS PERTINENTS A ANNOTER SONT MISES EN AVANT : l'échantillonnage contradictoire ET l'échantillonnage de coude. LA PRESENTATION PROPOSE AUSSI LE TRANSFERT D'APPRENTISSAGE POUR BENEFICIER DE MODELES PREENTRAINES SUR D'AUTRES DONNEES.** 
+
+**Définition**
+* Le **problème du cold start** consiste à trouver un moyen aussi efficace que possible pour apprendre à résoudre un problème d'apprentissage automatique lorsqu'on ne dispose pas de données annotées d'entrainement dès le départ.
+
+**Approches existantes**
+* **Supervision faible** : si on dispose de données non annotées, on peut annoter des cas faciles automatiquement et rapidement en définissant un algorithme à base de règles ou d'heuristiques. Malgré les quelques erreurs d'annotation résultantes, on peut utiliser ces données annotées pour entrainer un modèle de machine learning. Les règles sont faciles à écrire et apportent une haute précision mais sont rigides. par contre le machine learning est généralisable aux divers variantes et probabiliste (gestion des incertitudes et de l'aléatoire) mais nécessite des données annotées.
+* **Apprentissage actif** : l'annotation des données d'entrainement peut-être plus précise en sélectionnant les éléments les plus pertinents (???) et en les passant à un oracle (humain de préférence) pour annotation manuelle ou validation d'annotation automatique. La sélection des documents pertinents peut se faire par l'**échantillonnage contradictoire**  ou par l'**échantillonnage de coude** (2x plus rapide)
+* **Apprentissage par transfert** : 
+  * la technique simple consiste à utiliser des modèles de vecteurs de mots préentrainés (transfer 1.0)
+  * il est possible d'affiner le modèle de langue sur des données du domaine cible (transfer 2.0)
 
 ### 2019_ESWC_KB_Short_Text_Classification_Using_Entity_and_Category_Embedding [FINI]
 
