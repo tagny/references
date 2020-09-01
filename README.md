@@ -342,14 +342,36 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 *  Une distance standard peut ignorer des propriétés importantes dans le dataset = son utilisation par un apprentissage rendant ce dernier non optimal
 *  L'objectif de l'apprentissage d'une distance, c'est de rapprocher autant que possible les objets similaires, tout en éloignant les différents, pour améliorer la qualité des applications 
 *  Les bases de l'apprentissage de distance sont :
-  *  **l'analyse convexe** : pour la présentation et la résolution de pbs d'obtimisation (estimation de paramètres)
-  *  **l'analyse matricielle** : pour la compréhension de la discipline, la paramétrisation des algo, et l'obtimisation par les vecteurs propres
+  *  **l'analyse convexe** : pour la présentation et la résolution de pbs d'optimisation (estimation de paramètres)
+  *  **l'analyse matricielle** : pour la compréhension de la discipline, la paramétrisation des algo, et l'optimisation par les vecteurs propres
   *  **la théorie de l'information** : qui a motivé plusieurs des algorithmes
   
   
 ## aria/embeddings
 
 ### 2017 SIF-a_simple_but_tough_to_beat_baseline_for_sentence_embeddings [LU][A RESUMER]
+
+**Problème** : comment obtenir des vecteurs de phrases à partir de vecteurs de mots
+
+**Existant**
+* Approches non supervisées : 
+  * moyenne pondérée (tfidf-GloVe) ou pas (avg-Glove) de vecteur de mots
+  * skip-thought vectors : basé sur le modèle encodeur-décodeur avec un encodeur pour l'entrée (phrase) et deux décodeurs pour prédire respectivement la phrase précédente et la suivante.
+* Approches semi supervisées : 
+  * avg-PSL : vecteurs de mots PARAGRAMSL999 appris par supervision, puis moyenne simple
+* Approches supervisées : 
+  * PP, PP-proj: moyenne des vecteurs de mots PARAGRAMSL999 avec ou sans projection linéaire.
+  * DAN : réseau profond moyennant
+  * RNN, iRNN : réseau de neurones récurrent sans ou avec l'activation comme identité (??)
+  * LSTM, LSTM : avec (LSTM(o.g.)) ou sans (LSTM (no)) portes de sorties
+
+**Principe de la méthode SIF** (*smooth inverse frequency*)
+* calcul de la moyenne pondérée des vecteurs de mots w dans la phrase ; le poids étant a/(a+p(w)) avec a=paramètre (usually set to 1e-3) et p(w) fréquence de w
+* retrait des projections des vecteurs moyens sur leur 1er vecteur singulier (élimination du composant commun) [re-pondération pour éviter de très grandes différences inutiles d'échelles entre les composantes dûe à la trop grande fréquence de certains mots]
+
+**Voir aussi**
+  * https://blog.dataiku.com/how-deep-does-your-sentence-embedding-model-need-to-be
+
 
 ### 2018-sent2vec [PRIORITAIRE]
 
