@@ -27,7 +27,8 @@ Notes de lectures d'articles et de rapports scientifiques
 * **schéma prédéfini de cube C = (L_1, L_2, ..., L_n) = (thème, temps, lieu)** : ensemble des n dimensions du cube. 
 * celulle de cube (l_{t_1}, l_{t_2}, ..., l_{t_n}) : localisation des documents ayant les labels l_{t_i} dans les dimensions L_i resp.
 * **Tâche de construction de cube**: organiser un grand corpus de texte dans les classes d'un cube i.e. affecter n labels l_{t_1}, l_{t_2}, ..., l_{t_n} à chaque document d où l_{t_i} \in L_i représente la catégory de d dans la dimension L_i (L_i = Thème = {l_{t_1} = sport, l_{t_2} = business, ..., l_{t_n}=movies}
-** Existant et limites**
+
+**Existant et limites**
 * Génération des données d'entrainement limité par l'exigence d'effort d'ingénierie des caractéristiques
 * dataless classification limitée par le risque de limite et non adaptation du corpus externe
 * application de la classification de textes : données d'entrainement annotées nécessaires
@@ -349,9 +350,9 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
   
 ## aria/embeddings
 
-### 2017 SIF-a_simple_but_tough_to_beat_baseline_for_sentence_embeddings [LU][A RESUMER]
+### 2017 SIF-a_simple_but_tough_to_beat_baseline_for_sentence_embeddings [EN COURS]
 
-**Problème** : comment obtenir des vecteurs de phrases à partir de vecteurs de mots
+**Problème** : comment obtenir des vecteurs qui captent suffisamment la sémantique des phrases à partir de vecteurs de leurs mots?
 
 **Existant**
 * Approches non supervisées : 
@@ -365,13 +366,33 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
   * RNN, iRNN : réseau de neurones récurrent sans ou avec l'activation comme identité (??)
   * LSTM, LSTM : avec (LSTM(o.g.)) ou sans (LSTM (no)) portes de sorties
 
-**Principe de la méthode SIF** (*smooth inverse frequency*)
+**Principe du SIF**
+* modèle génératif à variable latente
+* [Ancien modèle] processus dynamique de génération de corpus :
+  * génération du t ème mot à l'étape t
+  * processus guidé par une marche aléatoire de variables latentes: vecteur de discours c_t \in R^d, vecteurs des mots w (v_w) dans R^d
+  * le produit scalaire de c_t et v_w capte les correlations entre le discours et le mot w
+  * proba d'observer w à l'étape t : P(w émis à t | c_t) ~= exp(<c_t, v_w>)
+  * marche aléatoire lente de c_t : c_t+1 obtenu de c_t en ajoutant un petit vecteur de déplacement
+  * c_t peut être estimé (c_s) pour le discours (phrase) : MAP estimate = moyenne pondérée des vecteurs de mots dans la phrase
+* [Amélioration de la marche aléatoire] **lissage de l'estimation de c_t**: meilleur terme de pondération avec 2 types de "terme de lissage" qui doivent tenir compte du fait que certains mots apparaissent en dehors du contexte, et que certains mots courant apparaissent indépendamment du discours ("the", "and", etc.): 
+  * introduction de \alpha*p(w), où p(w) est la proba d'un mot (unigram) dans tout le corpus, \alpha est un scalaire: pour permettre au mot d'apparaitre même si sont produit avec c_s est très faible (mot hors contexte)  
+  * introduction d'un vecteur de discours commun c_0 \in R^d : terme de correction pour les mots les plus fréquents (souvent lié à la syntaxe)
+* Ainsi P(w émis à t | c_t) ~= \alpha*p(w) + (1-\alpha)exp(<~c_s, v_w>)/Z_{~c_s} où ~c_s = \beta*c_0+(1-\beta)*c_s, c_0 et c_s étant orthogonaux, \alpha et \beta sont des hyperparamètres, Z_{~c_s} = \sum_{w \in V} exp(<~c_s, v_w>)
+
+**Algorithme de la méthode SIF** (*smooth inverse frequency*)
 * calcul de la moyenne pondérée des vecteurs de mots w dans la phrase ; le poids étant a/(a+p(w)) avec a=paramètre (usually set to 1e-3) et p(w) fréquence de w
 * retrait des projections des vecteurs moyens sur leur 1er vecteur singulier (élimination du composant commun) [re-pondération pour éviter de très grandes différences inutiles d'échelles entre les composantes dûe à la trop grande fréquence de certains mots]
+* 
+
+**Questions:**
+* **Est-ce important d'éliminer les stop-words ?** 
+  * [Réponse sur BERT (de l'auteur)] l'élimination des stopwords fait améliore les performances de 10% https://github.com/huggingface/transformers/issues/876#issuecomment-523228498
+* **Si oui quand doit-on éliminer les stopwords : avant l'entrainement de vecteurs de mots ou après i.e. au moment l'agrégation ?**
+* **Est-ce qu'un entrainement préalable des vecteurs de mots sur des textes du domaine cible (retail, finance, public service, health) peut améliorer encore plus les résultats ?**
 
 **Voir aussi**
   * https://blog.dataiku.com/how-deep-does-your-sentence-embedding-model-need-to-be
-
 
 ### 2018-sent2vec [PRIORITAIRE]
 
@@ -380,3 +401,5 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 ### 2015 [GOOD PERF] AdaSent-SelfAdaptiveHierarchicalSentenceModel [PRIORITAIRE]
 
 ### 2020 SBERT-WK - A Sentence Embedding Method ByDissecting BERT-based Word Models [PRIORITAIRE]
+
+### 2019 Sentence-BERT [PRIORITAIRE]
