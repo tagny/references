@@ -366,7 +366,7 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
   * RNN, iRNN : réseau de neurones récurrent sans ou avec l'activation comme identité (??)
   * LSTM, LSTM : avec (LSTM(o.g.)) ou sans (LSTM (no)) portes de sorties
 
-**Principe du SIF**
+**Hypothèses**
 * modèle génératif à variable latente
 * [Ancien modèle] processus dynamique de génération de corpus :
   * génération du t ème mot à l'étape t
@@ -379,6 +379,12 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
   * introduction de \alpha*p(w), où p(w) est la proba d'un mot (unigram) dans tout le corpus, \alpha est un scalaire: pour permettre au mot d'apparaitre même si sont produit avec c_s est très faible (mot hors contexte)  
   * introduction d'un vecteur de discours commun c_0 \in R^d : terme de correction pour les mots les plus fréquents (souvent lié à la syntaxe)
 * Ainsi P(w émis à t | c_t) ~= \alpha*p(w) + (1-\alpha)exp(<~c_s, v_w>)/Z_{~c_s} où ~c_s = \beta*c_0+(1-\beta)*c_s, c_0 et c_s étant orthogonaux, \alpha et \beta sont des hyperparamètres, Z_{~c_s} = \sum_{w \in V} exp(<~c_s, v_w>)
+  * si \alpha = \beta = 0, on retombe sur le modèle précédent
+  * si \alpha > 0, tout mot peut apparaitre dans la phrase (grâce à p(w))
+  * si \beta > 0, les mots corrélés avec c_0 peuvent apparaitre
+
+**Principe du SIF**
+
 
 **Algorithme de la méthode SIF** (*smooth inverse frequency*)
 * calcul de la moyenne pondérée des vecteurs de mots w dans la phrase ; le poids étant a/(a+p(w)) avec a=paramètre (usually set to 1e-3) et p(w) fréquence de w
