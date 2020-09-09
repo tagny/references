@@ -392,6 +392,9 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 * 
 
 **Questions:**
+* A quel point le SIF est sensible à la valeur de a, p(w), et aux word embedding?
+* comment employer le coefficient de correlation de pearson pour estimer le bon a?
+* comment employer le coefficient de correlation de pearson pour evaluer une tâche de similarité comme dans l'aricle ( Pearson’s r × 100 )?
 * **Est-ce important d'éliminer les stop-words ?** 
   * [Réponse sur BERT (de l'auteur)] l'élimination des stopwords fait améliore les performances de 10% https://github.com/huggingface/transformers/issues/876#issuecomment-523228498
 * **Si oui quand doit-on éliminer les stopwords : avant l'entrainement de vecteurs de mots ou après i.e. au moment l'agrégation ?**
@@ -403,6 +406,8 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 ### 2018-sent2vec [PRIORITAIRE]
 
 ### 2014 doc2vec [PRIORITAIRE]
+
+### 2020 P-SIF - Document Embeddings Using Partition Averaging [PRIORITAIRE]
 
 ### 2015 [GOOD PERF] AdaSent-SelfAdaptiveHierarchicalSentenceModel [PRIORITAIRE]
 
