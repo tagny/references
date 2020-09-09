@@ -383,13 +383,9 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
   * si \alpha > 0, tout mot peut apparaitre dans la phrase (grâce à p(w))
   * si \beta > 0, les mots corrélés avec c_0 peuvent apparaitre
 
-**Principe du SIF**
-
-
 **Algorithme de la méthode SIF** (*smooth inverse frequency*)
 * calcul de la moyenne pondérée des vecteurs de mots w dans la phrase ; le poids étant a/(a+p(w)) avec a=paramètre (usually set to 1e-3) et p(w) fréquence de w
 * retrait des projections des vecteurs moyens sur leur 1er vecteur singulier (élimination du composant commun) [re-pondération pour éviter de très grandes différences inutiles d'échelles entre les composantes dûe à la trop grande fréquence de certains mots]
-* 
 
 **Questions:**
 * A quel point le SIF est sensible à la valeur de a, p(w), et aux word embedding?
@@ -414,3 +410,5 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 ### 2020 SBERT-WK - A Sentence Embedding Method ByDissecting BERT-based Word Models [PRIORITAIRE]
 
 ### 2019 Sentence-BERT [PRIORITAIRE]
+
+### 2020 Improving Sentence Representations via Component Focusing
