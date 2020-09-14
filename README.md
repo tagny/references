@@ -407,6 +407,9 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 
 ### 2015 [GOOD PERF] AdaSent-SelfAdaptiveHierarchicalSentenceModel [PRIORITAIRE]
 
+**Voir aussi**
+* Implémentation : https://github.com/Mooonside/AdaSent
+
 ### 2020 SBERT-WK - A Sentence Embedding Method ByDissecting BERT-based Word Models [PRIORITAIRE]
 
 ### 2019 Sentence-BERT [PRIORITAIRE]
