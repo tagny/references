@@ -407,8 +407,10 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 
 ### 2015 [GOOD PERF] AdaSent-SelfAdaptiveHierarchicalSentenceModel [PRIORITAIRE]
 
+
 **Voir aussi**
-* Implémentation : https://github.com/Mooonside/AdaSent
+* Implémentation : https://github.com/AllenCX/Adasent-pytorch [seems the best online]
+* Implémentation : https://github.com/Mooonside/AdaSent [seems to have the best io]
 
 ### 2020 SBERT-WK - A Sentence Embedding Method ByDissecting BERT-based Word Models [PRIORITAIRE]
 
