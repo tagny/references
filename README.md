@@ -410,13 +410,18 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 * moyenne pondérée de tous les mots du document (FAIBLESSE perte de l'ordre comme BoW)
 * (Socher et al., 2011b) combinaison des mots dans un ordre donné par un arbre d'analyse de structure de phrase (parsing)  d'une phrase en utilisant des opérations matricielles (FAIBLESSE limitée aux phrases parce que le parsing est utilisé)
 
-**Approche proposée**
+**Approche proposée : Praragraph Vector**
 * ATOUT 
   * applicable aux textes de toutes tailles, 
   * ne nécessite pas d'affinement orienté tâche pour la fonction de pondération de mot, 
   * ne dépend pas des arbres de structure de textes, 
   * gain de 16% de taux d'erreur par rapport au SOTA pour la classification de sentiment
   * gain de 30 % par rapport au BoW pour la classification de texte
+  
+* PRINCIPE
+  * MODELE : concaténation du vecteur du paragraphe avec ceux de plusieurs mots du paragraphe, pour prédire le mot suivant
+  * APPRENTISSAGE DES VECTEURS : SGD + rétro-propagation, 
+  * PREDICTION : pour prédire le vecteur d'un nouveau paragraphe, l'intuition est que les paragraphes (leur vecteur) est unique, mais il partage les vecteurs de mots. le nouveau vecteur est inféré en fixant les vecteur de mots et en entraînant le nouveau vecteur de paragraphe jusqu'à la convergence
 
 
 
