@@ -403,6 +403,23 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 
 ### 2014 doc2vec [PRIORITAIRE]
 
+**Existant**
+* BoW  (FAIBLESSE perte d'ordre entre les mots, pas de sémantique)
+* BoNgram : (ATOUT ordre dans le contexte) (FAIBLESSE pas de sémantique)
+* (Bengio et al., 2006) concaténation des vecteurs de mots d'un contexte pour entrainer un réseau de neuronnes à reconnaître le prochain mot
+* moyenne pondérée de tous les mots du document (FAIBLESSE perte de l'ordre comme BoW)
+* (Socher et al., 2011b) combinaison des mots dans un ordre donné par un arbre d'analyse de structure de phrase (parsing)  d'une phrase en utilisant des opérations matricielles (FAIBLESSE limitée aux phrases parce que le parsing est utilisé)
+
+**Approche proposée**
+* ATOUT 
+  * applicable aux textes de toutes tailles, 
+  * ne nécessite pas d'affinement orienté tâche pour la fonction de pondération de mot, 
+  * ne dépend pas des arbres de structure de textes, 
+  * gain de 16% de taux d'erreur par rapport au SOTA pour la classification de sentiment
+  * gain de 30 % par rapport au BoW pour la classification de texte
+
+
+
 ### 2020 P-SIF - Document Embeddings Using Partition Averaging [PRIORITAIRE]
 
 ### 2015 [GOOD PERF] AdaSent-SelfAdaptiveHierarchicalSentenceModel [PRIORITAIRE]
@@ -415,3 +432,8 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 ### 2019 Sentence-BERT [PRIORITAIRE]
 
 ### 2020 Improving Sentence Representations via Component Focusing
+
+
+## aria/classification methods
+
+### 2016 NBSVM-Weka [MULTICLASS ADAPTATION]
