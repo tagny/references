@@ -299,9 +299,11 @@ L'entraînement est une boucle de génération ou màj d'annotations et d'estima
 
 ## aria/less annotation/data augmentation
 
-### 2020 When does data augmentation help generalization in NLP [PRIORITAIRE]
+### 2020 When does data augmentation help generalization in NLP [A LIRE]
 
-### 2019 EDA - Easy Data Augment Tech for Boosting Perf on Text Classif [PRIORITAIRE]
+### 2019 EDA - Easy Data Augment Tech for Boosting Perf on Text Classif [FINI][A RESUMER]
+
+### 2019 Improving short text classification through global augmentation methods [PRIORITAIRE][EN COURS]
 
 ## aria/less annotation/Weak supervision
 
