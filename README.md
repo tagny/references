@@ -435,6 +435,15 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 ### 2020 P-SIF - Document Embeddings Using Partition Averaging [PRIORITAIRE]
 
 ### 2015 [GOOD PERF] AdaSent-SelfAdaptiveHierarchicalSentenceModel [PRIORITAIRE]
+** existant**
+* cBoW: 
+  * agrégation de vecteurs de mots : avg ou max
+  * inconvénient: insensible à l'ordre entre les mots et aussi à la longueur de la phrase; par conséquent, il est possible pour 2 phrases de sens différents d'avoir la même représentation vectorielle
+
+**Principe**
+* représentation hiérarchique de phrase (mot-terme-phrase) sous forme de flow simulant à la fois des recurrent nn et des recursive nn. chaque niveau est agrégé et la pyramide entière est réduite en une hiérarchie H; la hiérarchie est ensuite fournie à un gating network et à un classifier pour former un ensemble
+* en recurrent nn, la dynamique consiste à transformer consécutivement les mots combiner au vecteur caché précédent; le dernier vecteur caché étant celui de la phrase (h_0 = 0  ; h_t = f(Wh_t^0+Hh_{t-1}+b). W est la matrice de connexion entrée-caché, H est la matrice de connexion récurrente caché-caché
+* en recursive nn, l'idée est de composer suivant un arbre binaire prédéfini dont les mots (leur vecteur) sont les feuilles. Des transformations non-linéaires sont récursivement appliqués du bas vers le haut pour générer la repr caché d'un noeud parent à partir de la repr de ses 2 fils (h = f(W_L h_l + W_R h_r + b). W_L et W_R sont les matrices de connexion recursive cauche et droite, h_l et h_r sont les repr cachées des fils gauche et droit.
 
 
 **Voir aussi**
