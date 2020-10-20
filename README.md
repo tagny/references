@@ -357,6 +357,12 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
   
 ## aria/embeddings
 
+### glove
+
+**voir aussi**
+* http://www.foldl.me/2014/glove-python/
+* code python 3 : https://github.com/maierhofert/glove.py.git
+
 ### 2017 SIF-a_simple_but_tough_to_beat_baseline_for_sentence_embeddings [EN COURS]
 
 **Problème** : comment obtenir des vecteurs qui captent suffisamment la sémantique des phrases à partir de vecteurs de leurs mots?
@@ -405,8 +411,32 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 
 **Voir aussi**
   * https://blog.dataiku.com/how-deep-does-your-sentence-embedding-model-need-to-be
+  * critique des fondements théoriques: https://www.groundai.com/project/a-critique-of-the-smooth-inverse-frequency-sentence-embeddings/1
 
 ### 2018-sent2vec [PRIORITAIRE]
+* méthode non supervisée d'apprentissage de la représentation vectorielle des textes: sorte d'extension de la fonction objectif de C-BOW mais pour entrainer les vecteurs de phrases
+* forme générale : min_{U,V} \sum_{S \in C} f_S(UV i_S)
+  * U \in R^kxh, et V \in R^hx|Vocab| : matrices des paramètres
+  * les colonnes de V collecte les vecteurs de mots de dimension h
+  * le vecteur indicateur i_S \in {0, 1}^|vocab| est un vecteur binaire encodant S (S est la fenêtre de contexte)
+  * k = |vocab|
+* le principe est : 
+  * d'apprendre les embeddings source v_w et destination u_w pour chaque mot w.
+  * l'embedding de la phrase est défini comme la moyenne des embeddings source de ces mots constituants
+  * le modèle est augmenté en apprenant les embeddings source non seulement pour les unigrams mais aussi pour les n-grams présent dans chaque phrase :
+  v_S = (1/|R(S)|) V i_{R(S)} = (1/|R(S)|) \sum_{w \in R(S)} v_w
+  * R(S) étant la liste des n-grams présents dans la phrase S
+  * afin de prédire le mot manquant dans le contexte, la fonction objectif modélise la sortie softmax approchée par échantillonnage négatif (améliore le temps d'apprentissage même pour un grand nombre de mots)
+* la fonction objectif d'entrainement de sent2vec est : min_{U,V} \sum_{S \in C} \sum_{w_t \in S} (l(u_{w_t}.T v_{S\{w_t}}) + \sum_{w'\in N_{w_t}}l(-u_{w'}.T v_{S\{w_t}}))
+  * S phrase courrante
+  * l : x-> log(1+e^{-x})
+  * N_{w_t} ensemble des mots négativement échantillonnés pour le mot w_t de S (en suivant une distribution multinomiale où chaque mot est associé à la proba q_n(w) = \sqrt{f_w} / (\sum_{w_i \in vocab } \sqrt{f_{w_i}} avec f_w la fréq normalisée de w dans le corpus  
+  * pour sélectionner les possible unigrams destinations (positifs), on utilise les sous-échantillonnages, chaque mot étant écarté avec la proba 1-q_p(w) où q_p(w) = min{1, \sqrt{t/f_w} + t/f_w}, où t est l'hyper-paramètre de sous-échantillonnage.
+  * le sous échantillonnage évite que les mots très fréquents n'aient trop d'influence au cours de l'apprentissage pour ne pas introduire des biais dans la tâche de prédiction
+  * la fonction objectif devient : min_{U,V} \sum_{S \in C} \sum_{w_t \in S} q_p(w)(l(u_{w_t}.T v_{S\{w_t}}) + |N_{w_t}|\sum_{w'\in N_{w_t}}q_n(w')l(-u_{w'}.T v_{S\{w_t}}))
+  
+**voir aussi**
+* https://rare-technologies.com/sent2vec-an-unsupervised-approach-towards-learning-sentence-embeddings/
 
 ### 2014 doc2vec [PRIORITAIRE]
 
@@ -430,7 +460,14 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
   * APPRENTISSAGE DES VECTEURS : SGD + rétro-propagation, 
   * PREDICTION : pour prédire le vecteur d'un nouveau paragraphe, l'intuition est que les paragraphes (leur vecteur) est unique, mais il partage les vecteurs de mots. le nouveau vecteur est inféré en fixant les vecteur de mots et en entraînant le nouveau vecteur de paragraphe jusqu'à la convergence
 
+**voir aussi**
+* CODE entraînement sur wikipedia : https://markroxor.github.io/gensim/static/notebooks/doc2vec-wikipedia.html
 
+
+### 2017 fastext - Bag of Tricks for Efficient Text Classification
+
+**voir aussi**
+* https://medium.com/paper-club/bag-of-tricks-for-efficient-text-classification-818bc47e90f#:~:text=%20Bag%20of%20Tricks%20for%20Efficient%20Text%20Classification,up%20of%20N%20ngram%20features%20in...%20More%20
 
 ### 2020 P-SIF - Document Embeddings Using Partition Averaging [PRIORITAIRE]
 
@@ -441,12 +478,36 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
   * inconvénient: insensible à l'ordre entre les mots et aussi à la longueur de la phrase; par conséquent, il est possible pour 2 phrases de sens différents d'avoir la même représentation vectorielle
 
 **Principe**
-* représentation hiérarchique de phrase (mot-terme-phrase) sous forme de flow simulant à la fois des recurrent nn et des recursive nn. chaque niveau est agrégé et la pyramide entière est réduite en une hiérarchie H; la hiérarchie est ensuite fournie à un gating network et à un classifier pour former un ensemble
+* représentation hiérarchique de phrase (mot-terme/expression-phrase) sous forme de flow simulant à la fois des recurrent nn et des recursive nn. chaque niveau est agrégé et la pyramide entière est réduite en une hiérarchie H; la hiérarchie est ensuite fournie à un gating network et à un classifier pour former un ensemble
 * en recurrent nn, la dynamique consiste à transformer consécutivement les mots combiner au vecteur caché précédent; le dernier vecteur caché étant celui de la phrase (h_0 = 0  ; h_t = f(Wh_t^0+Hh_{t-1}+b). W est la matrice de connexion entrée-caché, H est la matrice de connexion récurrente caché-caché
 * en recursive nn, l'idée est de composer suivant un arbre binaire prédéfini dont les mots (leur vecteur) sont les feuilles. Des transformations non-linéaires sont récursivement appliqués du bas vers le haut pour générer la repr caché d'un noeud parent à partir de la repr de ses 2 fils (h = f(W_L h_l + W_R h_r + b). W_L et W_R sont les matrices de connexion recursive cauche et droite, h_l et h_r sont les repr cachées des fils gauche et droit.
 
+**Différence avec grConv**
+* AdaSent forme une hiérarchie d'abstractions de la phrase d'entrée
+* AdaSent nourrit la hiérarchie comme un résumé dans le classifieur suivant 
+* combiné à un réseau de portes pour décider du poids de chaque niveau dans le consensus final.
+
+**Structure**
+* graphe acyclique orienté
+* structure pyramidale de T niveaux (de 1 à T du bas vers le haut) pour une entrée (phrase) de longueur T
+* la portée de chaque unité due niveau t=1 est le mot correspondant i.e. scope(h_j^1) = {x_j} \forall j \ in 1:T
+* \forall t>=2 scope(h_j^t) = scope(h_j^{t-1}) \cup scope(h_{j+1}^{t-1}) = {x_{j:j+t-1}}
+* le niveau t contient T-t+1 unités, et chaque unité a une porté de taille t*
+* l'unité h_j^t peut être interprété comme le résumé de l'expression x_{j:j+t-1} dans la phrase originale.
+* le niveau 1 comprend les vecteurs de mots 
+* le niveau T est le résumé global de la phrase entière
+* **pretraitement** transformation linéaire des vecteurs de mots de R^d à R^D (D >= d): la représentation cachée au niveau 1 est h_{1:T}^1 = U'h_{1:T}^0 = U'Ux_{1:T}, où U' \in R^{Dxd} est la matrice de transformation linéaire dans AdaSent et U \in R^{dxV} est la matrice d'embeddings de mots entrainés sur un large corpus non-annoté: **cette factorisation aide à réduire le nombre de paramètre du model lorsque d << D**
+
+**Composition locale et niveau de pooling (mise en commun)**
+* la composition locale récursive : h_j^t = w_l h_j^{t-1} + w_r h_{j+1}^{t-1} + w_c h~_j^t, avec  h~_j^t = f(W_L h_j^{t-1} + W_R h_{j+1}^{t-1} + b_W) avec 
+  * j \in 1:T-t+1, 
+  * t \in 2:T, 
+  * W_L et W_R \in R^{DxD} sont les matrices de combinaison caché-caché, matrices récurrente doublées, 
+  * b_W \in R^D est le vecteur biais
+  * w_l, w_r, et w_c sont les coefficients de porte s.c. w_l, w_r, w_c >= 0 et w_l + w_r + w_c = 1
 
 **Voir aussi**
+* Implémentation de l'auteur: https://hanzhaoml.github.io/papers/IJCAI2015/adasent.zip
 * Implémentation : https://github.com/AllenCX/Adasent-pytorch [seems the best online]
 * Implémentation : https://github.com/Mooonside/AdaSent [seems to have the best io]
 
