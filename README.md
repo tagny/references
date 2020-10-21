@@ -299,9 +299,29 @@ L'entraînement est une boucle de génération ou màj d'annotations et d'estima
 
 ## aria/less annotation/data augmentation
 
-### 2020 When does data augmentation help generalization in NLP [PRIORITAIRE]
+### 2020 When does data augmentation help generalization in NLP [EN COURS][PRIORITAIRE]
+**Problème**
+* les réseaux de neurones apprennent des "faibles" features
+* l'augmentation de données d'entrainement encourage les algos à préférer les features "fortes"
+* Dans quelles conditions l'augmentation des données d'entrainement évite l'utilisation des features faibles?
+  * Combien de contreexemples doivent être vus pour éviter une faible feature donnée?
+  * Est-ce que ce nombre croit avec la taille originale des données d'entrainement ?
+* Dans quelles conditions l'augmentation des données d'entrainement n'encourage pas l'utilisation des features plus forts?
+  * Est-ce que la relative difficulté de représenter une feature impact son adoption par le modèle?
+  * Comment l'effectivité de l'augmentation des données change dans les config qui contiennent plusieurs faibles features main une seule feature forte?
+* ces problèmes sont relatives à la perturbation de la distribution de l'entrainement, la généralisation interdomaine, les données d'entrainement non-iid (La plupart des méthodes de conception de classificateurs supposent que les échantillons d'apprentissage sont tirés indépendamment et de manière identique d'une distribution de génération de données inconnue, bien que cette hypothèse soit violée dans plusieurs problèmes de la vie réelle.[Dundar et al., IJCAI07, Learning Classifiers When The Training Data Is Not IID])
 
-### 2019 EDA - Easy Data Augment Tech for Boosting Perf on Text Classif [PRIORITAIRE]
+
+### 2019 EDA - Easy Data Augment Tech for Boosting Perf on Text Classif [En cours][PRIORITAIRE]8
+**Problème**: insufisance des données annotées pour l'entrainement d'un classifieur de textes
+
+**Solution**: générer "facilement" de nouvelles données annotées à l'aide de 4 opérations:
+* remplacement par synonyme : remplacer n mots (non stopword) choisis aléatoirement par leur synonyme
+* insertion aléatoire : n fois, remplacer un mot (non stopword) aléatoirement choisi par un synonyme
+* permutation aléatoire : n fois, permuter la position de 2 mots choisis aléatoirement
+* suppression aléatoire : supprimer aléatoirement chaque mot dans la phrase
+
+**Code**: https://github.com/jasonwei20/eda_nlp
 
 ## aria/less annotation/Weak supervision
 
