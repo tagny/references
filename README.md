@@ -565,6 +565,7 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 
 ### 2019 Bert - Pre-Training of Deep Bidirectional Transformers for Language understanding
 
+
 ### 2020 CamemBERT - a Tasty French Language Model
 **voir aussi**
 * https://blog.baamtu.com/word2vec-camembert-use-embedding-models/
@@ -600,7 +601,26 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 * CF-BERT est du SBERT si le facteur poids de la partie focalisée composant est nul (W_{cf}=0) : emb_S = emb_{S_{cf}} * W_{cf} + emb_{S_{basic}}
 * la couche de sortie peut être définir en fonction de la tâche spécifique à résoudre
   
-  
+### 2019 spherical-text-embedding
+**existant**
+* word2vec : apprend les repr de mots en espace euclidian en modélisant les co-occurrences locales entre mots
+* gap entre l'apprentissage en espace euclidian et l'usage en espace sphérique (normalisation préalable des vect tfidf, similarité cosinus)
+
+
+**proposition**
+* apprendre directement la repr de texte en espace sphérique ne imposant des contraintes de norme sur les repr i.e. définition d'un modèle génératif à 2 étapes à la surface d'une sphère unitaire
+  * un mot est généré en premier conformement à la sémantique du paragraphe
+  * ensuite, les mots environnant sont générés en consistance evec la sémantique du mot central
+* l'apprentissage est défini par une procédure d'optimisation efficiente de Rieman
+* Autre avantage: apprentissage joint de repr de mots et de repr de paragraphes; la repr des paragraphes peut être directement obtenue pendant l'entraînement grace à la modélisation explicite de la relation générative entre mots et leur paragraphe
+  * meilleur repr de mots par exploitation jointe des stats de co-occurrence mot-mot et mot-paragraphe
+* rapidité dû au remplacement de la couche conventionnelle softmax par la fontion sphérique de perte 
+
+
+**voir aussi**
+* Code de l'auteur: https://github.com/yumeng5/Spherical-Text-Embedding
+* slides: https://yumeng5.github.io/files/kdd20-tutorial/Part1.pdf
+
 ## aria/classification methods
 
 ### 2016 NBSVM-Weka [MULTICLASS ADAPTATION]
