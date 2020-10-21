@@ -357,11 +357,13 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
   
 ## aria/embeddings
 
-### glove
+### 2014 GloVe - Global Vectors for Word Representation
 
 **voir aussi**
+* https://nlp.stanford.edu/projects/glove/
 * http://www.foldl.me/2014/glove-python/
 * code python 3 : https://github.com/maierhofert/glove.py.git
+* explication : https://towardsdatascience.com/light-on-math-ml-intuitive-guide-to-understanding-glove-embeddings-b13b4f19c010
 
 ### 2017 SIF-a_simple_but_tough_to_beat_baseline_for_sentence_embeddings [EN COURS]
 
@@ -410,7 +412,9 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 * **Est-ce qu'un entrainement préalable des vecteurs de mots sur des textes du domaine cible (retail, finance, public service, health) peut améliorer encore plus les résultats ?**
 
 **Voir aussi**
+  * https://www.offconvex.org/2018/06/17/textembeddings/
   * https://blog.dataiku.com/how-deep-does-your-sentence-embedding-model-need-to-be
+  * une implémentation https://www.kaggle.com/procode/sif-embeddings-got-69-accuracy
   * critique des fondements théoriques: https://www.groundai.com/project/a-critique-of-the-smooth-inverse-frequency-sentence-embeddings/1
 
 ### 2018-sent2vec [PRIORITAIRE]
@@ -462,6 +466,7 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 
 **voir aussi**
 * CODE entraînement sur wikipedia : https://markroxor.github.io/gensim/static/notebooks/doc2vec-wikipedia.html
+* https://medium.com/@mishra.thedeepak/doc2vec-simple-implementation-example-df2afbbfbad5
 
 
 ### 2017 fastext - Bag of Tricks for Efficient Text Classification
@@ -482,7 +487,7 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 * en recurrent nn, la dynamique consiste à transformer consécutivement les mots combiner au vecteur caché précédent; le dernier vecteur caché étant celui de la phrase (h_0 = 0  ; h_t = f(Wh_t^0+Hh_{t-1}+b). W est la matrice de connexion entrée-caché, H est la matrice de connexion récurrente caché-caché
 * en recursive nn, l'idée est de composer suivant un arbre binaire prédéfini dont les mots (leur vecteur) sont les feuilles. Des transformations non-linéaires sont récursivement appliqués du bas vers le haut pour générer la repr caché d'un noeud parent à partir de la repr de ses 2 fils (h = f(W_L h_l + W_R h_r + b). W_L et W_R sont les matrices de connexion recursive cauche et droite, h_l et h_r sont les repr cachées des fils gauche et droit.
 
-**Différence avec grConv**
+**Différence avec grConv (réseau de neuronne récursif à porte**
 * AdaSent forme une hiérarchie d'abstractions de la phrase d'entrée
 * AdaSent nourrit la hiérarchie comme un résumé dans le classifieur suivant 
 * combiné à un réseau de portes pour décider du poids de chaque niveau dans le consensus final.
@@ -505,19 +510,71 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
   * W_L et W_R \in R^{DxD} sont les matrices de combinaison caché-caché, matrices récurrente doublées, 
   * b_W \in R^D est le vecteur biais
   * w_l, w_r, et w_c sont les coefficients de porte s.c. w_l, w_r, w_c >= 0 et w_l + w_r + w_c = 1
+* h_j^t, w_l, w_r, et w_c sont des fonctions paramétrées de h_j^{t-1} et h_{j+1}^{t-1} de telle sorte qu'ils peuvent décider soit de composer ces enfants par une transfo non-linéaire ou simplement transmettre leur représentation pour de futures compositions.
+* une fois la pyramide construite, on applique une agrégation de moyenne ou de max sur le niveau t pour obtenir un résumé \bar{h}^t de toutes les expressions consécutives de taille t dans la phrase originale
+
+**réseau de porte**
+* l'approche peut-être étendu pour résoudre un pb de classification
+  * soit g() un classifieur discriminatif qui prend \bar{h}^t \ in R^D en entrée et retourne les proba des différentes classes.
+  * w() est le réseau de porte qui prend \bar{h}^t en entrée et retourne un score de confiance 0<=\gama_t<=1
+  * intuitivement \gama_t dépeind la confiance qu'il y a dans le fait que le niveau t de résumé dans la hiérarchie, est adéquat pour être utilisé comme une repr adéquate pour l'instance d'entrée courante pour la tâche en main.
+  * on exige que  \gama_t >= 0 et \sum_{t=1}^T \gama_t = 1
+* soit C la variable aléatoire correspondant au label de la classe,
+* le consensus du système entier est atteint en prenant un mélange des décisions faites par les niveaux de résumé de la hiérarchie:
+  * p(C = c | x_{1:T}) = \sum_{t=1}^T p(C=c|H_x=t) p(H_x = t|x_{1:T}) = \sum_{t=1}^T h(\bar{h}^t) w(\bar{h}^t)
+  
+**retro-propagation à travers la structure (BPTS)**
+* la BPTS est utilisé pour calculer les dérivées partielles (les matrices W_L, W_R, G_L, G_R) de la fonction objectif L() par rapport au paramètres du model
+* dL/dW_L = \sum_{t=1}^T \sum_{j=1}^{T-t+1} dL/dh_j^t dh_j^t/dW_L
+* dL/dW_R = \sum_{t=1}^T \sum_{j=1}^{T-t+1} dL/dh_j^t dh_j^t/dW_R
+* grâce à la structure DAG : dL/dh_j^t = dL/dh_j^{t+1} dh_j^{t+1}/dh_j^t + dL/dh_{j-1}^{t+1} dh_{j-1}^{t+1}/dh_j^t
+* les formulations locales BP: dh_{j-1}^{t+1}/dh_j^t = w_r I + w_c diag(f')W_R et dh_{j}^{t+1}/dh_j^t = w_l I + w_c diag(f')W_L
+  * I matrice identité
+  * diag(f') matrice diagonale couverte par le vecteur f' qui est la dérivée de f pr rapport à son entrée
 
 **Voir aussi**
 * Implémentation de l'auteur: https://hanzhaoml.github.io/papers/IJCAI2015/adasent.zip
 * Implémentation : https://github.com/AllenCX/Adasent-pytorch [seems the best online]
 * Implémentation : https://github.com/Mooonside/AdaSent [seems to have the best io]
 
-### 2020 SBERT-WK - A Sentence Embedding Method ByDissecting BERT-based Word Models [PRIORITAIRE]
+### 2019 Bert - Pre-Training of Deep Bidirectional Transformers for Language understanding
+
+### 2020 CamemBERT - a Tasty French Language Model
+**voir aussi**
+* https://blog.baamtu.com/word2vec-camembert-use-embedding-models/
+
+### 2020 SBERT-WK - A Sentence Embedding Method By Dissecting BERT-based Word Models [PRIORITAIRE]
 
 ### 2019 Sentence-BERT [PRIORITAIRE]
 
-### 2020 Improving Sentence Representations via Component Focusing
+### 2020 Improving Sentence Representations via Component Focusing (CF-BERT)
+**existant**
+* moyenne des vecteurs de mots : methode la plus facile et plus populaire
+* LSTM : meilleur perf, mais complexe à mettre en oeuvre ; 
+* RNN: obtienne l'info global par recursion graduelle; 
+* CNN: n'obtient que l'info local; utilisation de filtres convolutionnels pour capter les dépendances locales + application de la couche d'agrégation pour extraire les features globales
+* Transformers: obtiennent directement l'info global, sont plus rapide car exécution en parallèle
+* BERT : utilise des transformer mais aucun embedding indépendant de phrase n'est calculé, (difficile de dériver un vecteur de phrase de BERT); 
+* SIF embedding : somme des embeddings de mots pondérés par l'idf et soustrit à un vecteur basé sur les composantes principale des vecteurs de phrases
+* Sent2Vec apprend les features de  n-grams dans la phrase pour prédire le mot central à partir du contexte environnant
+* Skip-thought : un encoder neural séquentiel de phrase, entraine une archi encodeur-décodeur qui peut prédire les phrases environnantes
+* InferSent : un encoder neural séquentiel de phrase, utilise des données labélisées des datasets SNLI et Multi-Genre NLI pour entrainer un réseau BiLSTM siamois avec l'agrégation par max sur la sortie pour générer l'encodeur de phrase.
+* USE universal Sentence Encoder : entraine un réseau de transformeur et augmente l'apprentissage non-supervisé initialement réalisé sur un corpus non annonté comme wikipédia puis continué sur SNLI
+* Sentence-BERT (SBERT) : utilise une structure de réseau siamois pour affiner le réseau pré-entrainé BERT premièrement par NLI puis spécifiquement par les tâches spécifique de NLP pour déduire des repr sémantiquement significative de phrases.
 
-
+**proposition CF-BERT**
+* modification du réseau pré-entrainé BERT
+* utilise une structure de réseau siamois pour dériver des vecteurs sémantiques significatifs par focalisation sur les composants 
+* divise la représentation d'une phrase en 2 parties:
+  * **partie de base** correspond à la phrase complète (positon dominante)
+  * la **partie améliorée par composant** qui tient compte de l'info pertinente et réduit l'impact des mots nuisibles sur le sens de la phrase (rôle de supplément)
+* Pour la partie améliorée, un arbre de dépendance grammaticale est utilisé 
+* un facteur de poids est déterminé par grid search pour générer la représentation optimale de la phrase
+* le vecteur final est obtenu par une stratégie d'agrégation 
+* CF-BERT est du SBERT si le facteur poids de la partie focalisée composant est nul (W_{cf}=0) : emb_S = emb_{S_{cf}} * W_{cf} + emb_{S_{basic}}
+* la couche de sortie peut être définir en fonction de la tâche spécifique à résoudre
+  
+  
 ## aria/classification methods
 
 ### 2016 NBSVM-Weka [MULTICLASS ADAPTATION]
