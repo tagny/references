@@ -299,6 +299,7 @@ L'entraînement est une boucle de génération ou màj d'annotations et d'estima
 
 ## aria/less annotation/data augmentation
 
+<<<<<<< HEAD
 ### 2020 When does data augmentation help generalization in NLP [EN COURS][PRIORITAIRE]
 **Problème**
 * les réseaux de neurones apprennent des "faibles" features
@@ -322,6 +323,13 @@ L'entraînement est une boucle de génération ou màj d'annotations et d'estima
 * suppression aléatoire : supprimer aléatoirement chaque mot dans la phrase
 
 **Code**: https://github.com/jasonwei20/eda_nlp
+=======
+### 2020 When does data augmentation help generalization in NLP [A LIRE]
+
+### 2019 EDA - Easy Data Augment Tech for Boosting Perf on Text Classif [FINI][A RESUMER]
+
+### 2019 Improving short text classification through global augmentation methods [PRIORITAIRE][EN COURS]
+>>>>>>> 12162b5184575afae52584ec5caee0835ecd0f69
 
 ## aria/less annotation/Weak supervision
 
@@ -375,6 +383,14 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
   
 ## aria/embeddings
 
+### 2014 GloVe - Global Vectors for Word Representation
+
+**voir aussi**
+* https://nlp.stanford.edu/projects/glove/
+* http://www.foldl.me/2014/glove-python/
+* code python 3 : https://github.com/maierhofert/glove.py.git
+* explication : https://towardsdatascience.com/light-on-math-ml-intuitive-guide-to-understanding-glove-embeddings-b13b4f19c010
+
 ### 2017 SIF-a_simple_but_tough_to_beat_baseline_for_sentence_embeddings [EN COURS]
 
 **Problème** : comment obtenir des vecteurs qui captent suffisamment la sémantique des phrases à partir de vecteurs de leurs mots?
@@ -422,9 +438,35 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 * **Est-ce qu'un entrainement préalable des vecteurs de mots sur des textes du domaine cible (retail, finance, public service, health) peut améliorer encore plus les résultats ?**
 
 **Voir aussi**
+  * https://www.offconvex.org/2018/06/17/textembeddings/
   * https://blog.dataiku.com/how-deep-does-your-sentence-embedding-model-need-to-be
+  * une implémentation https://www.kaggle.com/procode/sif-embeddings-got-69-accuracy
+  * critique des fondements théoriques: https://www.groundai.com/project/a-critique-of-the-smooth-inverse-frequency-sentence-embeddings/1
 
 ### 2018-sent2vec [PRIORITAIRE]
+* méthode non supervisée d'apprentissage de la représentation vectorielle des textes: sorte d'extension de la fonction objectif de C-BOW mais pour entrainer les vecteurs de phrases
+* forme générale : min_{U,V} \sum_{S \in C} f_S(UV i_S)
+  * U \in R^kxh, et V \in R^hx|Vocab| : matrices des paramètres
+  * les colonnes de V collecte les vecteurs de mots de dimension h
+  * le vecteur indicateur i_S \in {0, 1}^|vocab| est un vecteur binaire encodant S (S est la fenêtre de contexte)
+  * k = |vocab|
+* le principe est : 
+  * d'apprendre les embeddings source v_w et destination u_w pour chaque mot w.
+  * l'embedding de la phrase est défini comme la moyenne des embeddings source de ces mots constituants
+  * le modèle est augmenté en apprenant les embeddings source non seulement pour les unigrams mais aussi pour les n-grams présent dans chaque phrase :
+  v_S = (1/|R(S)|) V i_{R(S)} = (1/|R(S)|) \sum_{w \in R(S)} v_w
+  * R(S) étant la liste des n-grams présents dans la phrase S
+  * afin de prédire le mot manquant dans le contexte, la fonction objectif modélise la sortie softmax approchée par échantillonnage négatif (améliore le temps d'apprentissage même pour un grand nombre de mots)
+* la fonction objectif d'entrainement de sent2vec est : min_{U,V} \sum_{S \in C} \sum_{w_t \in S} (l(u_{w_t}.T v_{S\{w_t}}) + \sum_{w'\in N_{w_t}}l(-u_{w'}.T v_{S\{w_t}}))
+  * S phrase courrante
+  * l : x-> log(1+e^{-x})
+  * N_{w_t} ensemble des mots négativement échantillonnés pour le mot w_t de S (en suivant une distribution multinomiale où chaque mot est associé à la proba q_n(w) = \sqrt{f_w} / (\sum_{w_i \in vocab } \sqrt{f_{w_i}} avec f_w la fréq normalisée de w dans le corpus  
+  * pour sélectionner les possible unigrams destinations (positifs), on utilise les sous-échantillonnages, chaque mot étant écarté avec la proba 1-q_p(w) où q_p(w) = min{1, \sqrt{t/f_w} + t/f_w}, où t est l'hyper-paramètre de sous-échantillonnage.
+  * le sous échantillonnage évite que les mots très fréquents n'aient trop d'influence au cours de l'apprentissage pour ne pas introduire des biais dans la tâche de prédiction
+  * la fonction objectif devient : min_{U,V} \sum_{S \in C} \sum_{w_t \in S} q_p(w)(l(u_{w_t}.T v_{S\{w_t}}) + |N_{w_t}|\sum_{w'\in N_{w_t}}q_n(w')l(-u_{w'}.T v_{S\{w_t}}))
+  
+**voir aussi**
+* https://rare-technologies.com/sent2vec-an-unsupervised-approach-towards-learning-sentence-embeddings/
 
 ### 2014 doc2vec [PRIORITAIRE]
 
@@ -448,24 +490,117 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
   * APPRENTISSAGE DES VECTEURS : SGD + rétro-propagation, 
   * PREDICTION : pour prédire le vecteur d'un nouveau paragraphe, l'intuition est que les paragraphes (leur vecteur) est unique, mais il partage les vecteurs de mots. le nouveau vecteur est inféré en fixant les vecteur de mots et en entraînant le nouveau vecteur de paragraphe jusqu'à la convergence
 
+**voir aussi**
+* CODE entraînement sur wikipedia : https://markroxor.github.io/gensim/static/notebooks/doc2vec-wikipedia.html
+* https://medium.com/@mishra.thedeepak/doc2vec-simple-implementation-example-df2afbbfbad5
 
+
+### 2017 fastext - Bag of Tricks for Efficient Text Classification
+
+**voir aussi**
+* https://medium.com/paper-club/bag-of-tricks-for-efficient-text-classification-818bc47e90f#:~:text=%20Bag%20of%20Tricks%20for%20Efficient%20Text%20Classification,up%20of%20N%20ngram%20features%20in...%20More%20
 
 ### 2020 P-SIF - Document Embeddings Using Partition Averaging [PRIORITAIRE]
 
 ### 2015 [GOOD PERF] AdaSent-SelfAdaptiveHierarchicalSentenceModel [PRIORITAIRE]
+** existant**
+* cBoW: 
+  * agrégation de vecteurs de mots : avg ou max
+  * inconvénient: insensible à l'ordre entre les mots et aussi à la longueur de la phrase; par conséquent, il est possible pour 2 phrases de sens différents d'avoir la même représentation vectorielle
 
+**Principe**
+* représentation hiérarchique de phrase (mot-terme/expression-phrase) sous forme de flow simulant à la fois des recurrent nn et des recursive nn. chaque niveau est agrégé et la pyramide entière est réduite en une hiérarchie H; la hiérarchie est ensuite fournie à un gating network et à un classifier pour former un ensemble
+* en recurrent nn, la dynamique consiste à transformer consécutivement les mots combiner au vecteur caché précédent; le dernier vecteur caché étant celui de la phrase (h_0 = 0  ; h_t = f(Wh_t^0+Hh_{t-1}+b). W est la matrice de connexion entrée-caché, H est la matrice de connexion récurrente caché-caché
+* en recursive nn, l'idée est de composer suivant un arbre binaire prédéfini dont les mots (leur vecteur) sont les feuilles. Des transformations non-linéaires sont récursivement appliqués du bas vers le haut pour générer la repr caché d'un noeud parent à partir de la repr de ses 2 fils (h = f(W_L h_l + W_R h_r + b). W_L et W_R sont les matrices de connexion recursive cauche et droite, h_l et h_r sont les repr cachées des fils gauche et droit.
+
+**Différence avec grConv (réseau de neuronne récursif à porte**
+* AdaSent forme une hiérarchie d'abstractions de la phrase d'entrée
+* AdaSent nourrit la hiérarchie comme un résumé dans le classifieur suivant 
+* combiné à un réseau de portes pour décider du poids de chaque niveau dans le consensus final.
+
+**Structure**
+* graphe acyclique orienté
+* structure pyramidale de T niveaux (de 1 à T du bas vers le haut) pour une entrée (phrase) de longueur T
+* la portée de chaque unité due niveau t=1 est le mot correspondant i.e. scope(h_j^1) = {x_j} \forall j \ in 1:T
+* \forall t>=2 scope(h_j^t) = scope(h_j^{t-1}) \cup scope(h_{j+1}^{t-1}) = {x_{j:j+t-1}}
+* le niveau t contient T-t+1 unités, et chaque unité a une porté de taille t*
+* l'unité h_j^t peut être interprété comme le résumé de l'expression x_{j:j+t-1} dans la phrase originale.
+* le niveau 1 comprend les vecteurs de mots 
+* le niveau T est le résumé global de la phrase entière
+* **pretraitement** transformation linéaire des vecteurs de mots de R^d à R^D (D >= d): la représentation cachée au niveau 1 est h_{1:T}^1 = U'h_{1:T}^0 = U'Ux_{1:T}, où U' \in R^{Dxd} est la matrice de transformation linéaire dans AdaSent et U \in R^{dxV} est la matrice d'embeddings de mots entrainés sur un large corpus non-annoté: **cette factorisation aide à réduire le nombre de paramètre du model lorsque d << D**
+
+**Composition locale et niveau de pooling (mise en commun)**
+* la composition locale récursive : h_j^t = w_l h_j^{t-1} + w_r h_{j+1}^{t-1} + w_c h~_j^t, avec  h~_j^t = f(W_L h_j^{t-1} + W_R h_{j+1}^{t-1} + b_W) avec 
+  * j \in 1:T-t+1, 
+  * t \in 2:T, 
+  * W_L et W_R \in R^{DxD} sont les matrices de combinaison caché-caché, matrices récurrente doublées, 
+  * b_W \in R^D est le vecteur biais
+  * w_l, w_r, et w_c sont les coefficients de porte s.c. w_l, w_r, w_c >= 0 et w_l + w_r + w_c = 1
+* h_j^t, w_l, w_r, et w_c sont des fonctions paramétrées de h_j^{t-1} et h_{j+1}^{t-1} de telle sorte qu'ils peuvent décider soit de composer ces enfants par une transfo non-linéaire ou simplement transmettre leur représentation pour de futures compositions.
+* une fois la pyramide construite, on applique une agrégation de moyenne ou de max sur le niveau t pour obtenir un résumé \bar{h}^t de toutes les expressions consécutives de taille t dans la phrase originale
+
+**réseau de porte**
+* l'approche peut-être étendu pour résoudre un pb de classification
+  * soit g() un classifieur discriminatif qui prend \bar{h}^t \ in R^D en entrée et retourne les proba des différentes classes.
+  * w() est le réseau de porte qui prend \bar{h}^t en entrée et retourne un score de confiance 0<=\gama_t<=1
+  * intuitivement \gama_t dépeind la confiance qu'il y a dans le fait que le niveau t de résumé dans la hiérarchie, est adéquat pour être utilisé comme une repr adéquate pour l'instance d'entrée courante pour la tâche en main.
+  * on exige que  \gama_t >= 0 et \sum_{t=1}^T \gama_t = 1
+* soit C la variable aléatoire correspondant au label de la classe,
+* le consensus du système entier est atteint en prenant un mélange des décisions faites par les niveaux de résumé de la hiérarchie:
+  * p(C = c | x_{1:T}) = \sum_{t=1}^T p(C=c|H_x=t) p(H_x = t|x_{1:T}) = \sum_{t=1}^T h(\bar{h}^t) w(\bar{h}^t)
+  
+**retro-propagation à travers la structure (BPTS)**
+* la BPTS est utilisé pour calculer les dérivées partielles (les matrices W_L, W_R, G_L, G_R) de la fonction objectif L() par rapport au paramètres du model
+* dL/dW_L = \sum_{t=1}^T \sum_{j=1}^{T-t+1} dL/dh_j^t dh_j^t/dW_L
+* dL/dW_R = \sum_{t=1}^T \sum_{j=1}^{T-t+1} dL/dh_j^t dh_j^t/dW_R
+* grâce à la structure DAG : dL/dh_j^t = dL/dh_j^{t+1} dh_j^{t+1}/dh_j^t + dL/dh_{j-1}^{t+1} dh_{j-1}^{t+1}/dh_j^t
+* les formulations locales BP: dh_{j-1}^{t+1}/dh_j^t = w_r I + w_c diag(f')W_R et dh_{j}^{t+1}/dh_j^t = w_l I + w_c diag(f')W_L
+  * I matrice identité
+  * diag(f') matrice diagonale couverte par le vecteur f' qui est la dérivée de f pr rapport à son entrée
 
 **Voir aussi**
+* Implémentation de l'auteur: https://hanzhaoml.github.io/papers/IJCAI2015/adasent.zip
 * Implémentation : https://github.com/AllenCX/Adasent-pytorch [seems the best online]
 * Implémentation : https://github.com/Mooonside/AdaSent [seems to have the best io]
 
-### 2020 SBERT-WK - A Sentence Embedding Method ByDissecting BERT-based Word Models [PRIORITAIRE]
+### 2019 Bert - Pre-Training of Deep Bidirectional Transformers for Language understanding
+
+### 2020 CamemBERT - a Tasty French Language Model
+**voir aussi**
+* https://blog.baamtu.com/word2vec-camembert-use-embedding-models/
+
+### 2020 SBERT-WK - A Sentence Embedding Method By Dissecting BERT-based Word Models [PRIORITAIRE]
 
 ### 2019 Sentence-BERT [PRIORITAIRE]
 
-### 2020 Improving Sentence Representations via Component Focusing
+### 2020 Improving Sentence Representations via Component Focusing (CF-BERT)
+**existant**
+* moyenne des vecteurs de mots : methode la plus facile et plus populaire
+* LSTM : meilleur perf, mais complexe à mettre en oeuvre ; 
+* RNN: obtienne l'info global par recursion graduelle; 
+* CNN: n'obtient que l'info local; utilisation de filtres convolutionnels pour capter les dépendances locales + application de la couche d'agrégation pour extraire les features globales
+* Transformers: obtiennent directement l'info global, sont plus rapide car exécution en parallèle
+* BERT : utilise des transformer mais aucun embedding indépendant de phrase n'est calculé, (difficile de dériver un vecteur de phrase de BERT); 
+* SIF embedding : somme des embeddings de mots pondérés par l'idf et soustrit à un vecteur basé sur les composantes principale des vecteurs de phrases
+* Sent2Vec apprend les features de  n-grams dans la phrase pour prédire le mot central à partir du contexte environnant
+* Skip-thought : un encoder neural séquentiel de phrase, entraine une archi encodeur-décodeur qui peut prédire les phrases environnantes
+* InferSent : un encoder neural séquentiel de phrase, utilise des données labélisées des datasets SNLI et Multi-Genre NLI pour entrainer un réseau BiLSTM siamois avec l'agrégation par max sur la sortie pour générer l'encodeur de phrase.
+* USE universal Sentence Encoder : entraine un réseau de transformeur et augmente l'apprentissage non-supervisé initialement réalisé sur un corpus non annonté comme wikipédia puis continué sur SNLI
+* Sentence-BERT (SBERT) : utilise une structure de réseau siamois pour affiner le réseau pré-entrainé BERT premièrement par NLI puis spécifiquement par les tâches spécifique de NLP pour déduire des repr sémantiquement significative de phrases.
 
-
+**proposition CF-BERT**
+* modification du réseau pré-entrainé BERT
+* utilise une structure de réseau siamois pour dériver des vecteurs sémantiques significatifs par focalisation sur les composants 
+* divise la représentation d'une phrase en 2 parties:
+  * **partie de base** correspond à la phrase complète (positon dominante)
+  * la **partie améliorée par composant** qui tient compte de l'info pertinente et réduit l'impact des mots nuisibles sur le sens de la phrase (rôle de supplément)
+* Pour la partie améliorée, un arbre de dépendance grammaticale est utilisé 
+* un facteur de poids est déterminé par grid search pour générer la représentation optimale de la phrase
+* le vecteur final est obtenu par une stratégie d'agrégation 
+* CF-BERT est du SBERT si le facteur poids de la partie focalisée composant est nul (W_{cf}=0) : emb_S = emb_{S_{cf}} * W_{cf} + emb_{S_{basic}}
+* la couche de sortie peut être définir en fonction de la tâche spécifique à résoudre
+  
+  
 ## aria/classification methods
 
 ### 2016 NBSVM-Weka [MULTICLASS ADAPTATION]
