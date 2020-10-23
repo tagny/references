@@ -298,8 +298,7 @@ L'entraînement est une boucle de génération ou màj d'annotations et d'estima
 
 
 ## aria/less annotation/data augmentation
-
-<<<<<<< HEAD
+ 
 ### 2020 When does data augmentation help generalization in NLP [EN COURS][PRIORITAIRE]
 **Problème**
 * les réseaux de neurones apprennent des "faibles" features
@@ -323,13 +322,7 @@ L'entraînement est une boucle de génération ou màj d'annotations et d'estima
 * suppression aléatoire : supprimer aléatoirement chaque mot dans la phrase
 
 **Code**: https://github.com/jasonwei20/eda_nlp
-=======
-### 2020 When does data augmentation help generalization in NLP [A LIRE]
 
-### 2019 EDA - Easy Data Augment Tech for Boosting Perf on Text Classif [FINI][A RESUMER]
-
-### 2019 Improving short text classification through global augmentation methods [PRIORITAIRE][EN COURS]
->>>>>>> 12162b5184575afae52584ec5caee0835ecd0f69
 
 ## aria/less annotation/Weak supervision
 
@@ -495,7 +488,7 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 * https://medium.com/@mishra.thedeepak/doc2vec-simple-implementation-example-df2afbbfbad5
 
 
-### 2017 fastext - Bag of Tricks for Efficient Text Classification
+### 2017 fasttext - Enriching Word Vectors with Subword Information
 
 **voir aussi**
 * https://medium.com/paper-club/bag-of-tricks-for-efficient-text-classification-818bc47e90f#:~:text=%20Bag%20of%20Tricks%20for%20Efficient%20Text%20Classification,up%20of%20N%20ngram%20features%20in...%20More%20
@@ -621,6 +614,13 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 * Code de l'auteur: https://github.com/yumeng5/Spherical-Text-Embedding
 * slides: https://yumeng5.github.io/files/kdd20-tutorial/Part1.pdf
 
+
 ## aria/classification methods
 
 ### 2016 NBSVM-Weka [MULTICLASS ADAPTATION]
+
+
+## aria/short texts similarity
+
+### 2019 Sentence Similarity Techniques for Short vs Variable Length Textusing Word Embeddings [A RESUMER]
+
