@@ -622,5 +622,36 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 
 ## aria/short texts similarity
 
-### 2019 Sentence Similarity Techniques for Short vs Variable Length Textusing Word Embeddings [A RESUMER]
+### 2019 Sentence Similarity Techniques for Short vs Variable Length Textusing Word Embeddings [FINI]*
+**Problème**: Comment estimer la similarité sémantique entre une phrase S1 courte (1-3 mots e.g. des commandes courtes comme "*supprimer la commande*" ou "*montrer les éléments récents*") et une autre phrase S2 plus grande ?
 
+**Contexte**: agent conversationnel (e.g. chatbot)
+
+**Existant**:
+* le cosinus de similarité des sac-de-mots ne tient pas compte de l'ordre des mots dans la phrase
+* la somme ou moyenne (pondérée ou pas) des vecteurs de mots :
+  * inconvénient: le cosinus est invariant entre la somme et la moyenne
+  * inconvénient: la moyenne pondérée n'aide pas pour une longue phrase 
+  * avantage: la somme et  la moyenne sont moins chères à calculer
+* problème dans le dev de chatbot:
+  * nécessité d'un grand nombre de données annotées d'entrainement
+  * gestion perpétuelle de plusieurs données à chaque prédiction : complexe et chèr en temps 
+
+
+**Proposition1: fenêtre coulissante avec moyenne pondérée des vecteurs de mots**
+* taille_fenetre = nombre de mot de S1 (la phrase la plus courte)
+* S2 est découpé en sous chaines {S2_j} de taille taille_fenetre
+* le vecteur de chaque S2_i est la moyenne des vecteurs de ses mots
+* sim(S1, S2) = max_j cos_sim(vecteur_S1, vecteur_S2_j)
+
+**Proposition2: vecteurs pondérés de n-grams**
+* N-gram = sous-chaines de N mots consécutifs (e.g. unigram=1-gram, bigram=2-gram, trigram=3-gram)
+* les phrases Si (i \in 1:2) sont découpées en N_{i1} unigrams {Si_1-gram_j}, N_{i2} bigrams {Si_2-gram_j}, N_{i3} trigrams {Si_3-gram_j}, ..., Nmax-gram {{Si_Nmax-gram_j}}
+* le vecteur de chaque N-gram est la moyenne des vecteurs de ses mots
+* \forall k in 1:Nmax, score_k = 1/N_{1k} \sum_{n1 \in 1:N_{1k}} max_{n2 \in 1:N_{2k}} {cos_sim(vecteur_{S1_k-gram_j}, vecteur_{S2_k-gram_j})}
+* sim(S1, S2) = \sum_{k \in 1:Nmax} w_k * score_k, avec w_k = k / {\sum_{k \in 1:Nmax}}
+
+**discussion des résultats**
+* LIMITE: **dataset conçu par les auteurs** : une commande courte de base (S1) et diverses façons (généralement un peu plus longue) d'exprimer cette commande (S2)
+* le seuil minimal de similarité est fixé à 0.9
+* proposition1 beaucoup moins bonne que la proposition 2 (F1-score de 0.3708 contre 0.9316, et 0.1451 pour le cos_sim Google's Universal Sentence Encoding)
