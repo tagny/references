@@ -12,6 +12,32 @@ Notes de lectures d'articles et de rapports scientifiques
 * **weak supervision** : générer automatiquement des données (par exemple avec un système de règles REGEX)
   * bon si textes brutes dispo et expertise de mots-clés dispo
 
+### 2019-WenpengYin-BenchmarkingZeroshotTextClassificationDatasetsEvaluationAndEntailmentApproach
+**Pb**: 0shot-tc == affecter le label approprié à un morceau de texte indépendament du domaine et de l'aspect textuel décrit par le label.
+* **aucune donnée annotée pour l'entrainement pour une partie ou tout l'ens des labels**
+
+**Pb de l'Existant**
+* modelisation restrainte à une seule tâche (catégorisation thématique)
+* les labels sont encodés en indices sans tenir compte de leur sens
+* difficile de comparer les différent travaux 
+  * datasets différents
+  * métriqs d'éval différentes
+  
+**Proposition**: benchmark de datasets et d'éval, et une approche par implication (*entailment*) pour gérer différents aspects (thème, émotion, évts, ...) dans un paradigme unifié
+1. déf plus général/large du pb: oshot-tc == apprendre une fct f: X -> Y où f(.) n'a jamais vu de données annotées des labels de Y lors de son dev
+2 Dataset : 
+  * 3 aspects (thème, émotion, et situation == event).
+  * données découpées : 
+    * train, dev, test
+    * et séparation des classes vues et classes non vues
+3. Evaluation: ?
+
+### 2020-YuMeng-TextClassifUsingLabelNamesOnlyALangModelSelfTrainingApproach
+**Pb**: 
+* les algos actuels ont besoin d'un bon jeu de données annotées par des humains
+  * difficile et cher d'en obtenir
+* l'humain n'a pourtant pas besoin de données d'entrainement
+  * mais souvent d'un petit ens de termes décrivant les catégories
 
 ### 2018 Doc2Cube - Allocating Documents to Text Cube without Labeled Data [En cours]
 ** Objectifs ** : Construire un modèle Doc2Cube de cubes de textes à partir d'un corpus textuel (D) automatiquement sans données annotées uniquement avec le label comme petit ensemble de termes semences
@@ -379,7 +405,12 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 ### 2014 GloVe - Global Vectors for Word Representation
 
 **voir aussi**
-* https://nlp.stanford.edu/projects/glove/
+* homepage https://nlp.stanford.edu/projects/glove/
+* code original en C/C++ : https://github.com/stanfordnlp/GloVe
+* *Possible implémentation fonctionnant sur windows: 
+    * les 2 derniers commentaires de golslan : https://groups.google.com/forum/#!topic/globalvectors/rqPmTBqFbCQ
+    * code py2 : https://github.com/hans/glove.py
+    * code py3 : https://github.com/maierhofert/glove.py
 * http://www.foldl.me/2014/glove-python/
 * code python 3 : https://github.com/maierhofert/glove.py.git
 * explication : https://towardsdatascience.com/light-on-math-ml-intuitive-guide-to-understanding-glove-embeddings-b13b4f19c010
@@ -655,3 +686,9 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 * LIMITE: **dataset conçu par les auteurs** : une commande courte de base (S1) et diverses façons (généralement un peu plus longue) d'exprimer cette commande (S2)
 * le seuil minimal de similarité est fixé à 0.9
 * proposition1 beaucoup moins bonne que la proposition 2 (F1-score de 0.3708 contre 0.9316, et 0.1451 pour le cos_sim Google's Universal Sentence Encoding)
+
+
+## aria / short texts similarity / metric learning
+
+### 2019 Metric Learning for Dynamic Text Classification [EN COURS]
+
