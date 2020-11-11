@@ -485,6 +485,10 @@ L'article présente une méthode simple pour adresser l'absence de données anno
 
 **voir aussi**
 * https://medium.com/paper-club/bag-of-tricks-for-efficient-text-classification-818bc47e90f#:~:text=%20Bag%20of%20Tricks%20for%20Efficient%20Text%20Classification,up%20of%20N%20ngram%20features%20in...%20More%20
+* https://towardsdatascience.com/fasttext-ea9009dba0e8
+* Utilisation pour la correction orthographique:
+  * https://github.com/Bicky23/FastText-Spell-Checker
+  * https://www.haptik.ai/tech/extract-spelling-mistakes-fasttext/
 
 ### 2020 P-SIF - Document Embeddings Using Partition Averaging [PRIORITAIRE]
 
