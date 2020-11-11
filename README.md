@@ -2,7 +2,7 @@
 Notes de lectures d'articles et de rapports scientifiques
 
 
-## aria/dataless intent recognition
+## dataless intent recognition
 **Problème** : absence de données annotées pour entrainer des algo de NLP
 
 **Solutions**:
@@ -263,8 +263,8 @@ Ce travail propose d'adresser l'absence de données annotées. La technique cons
   * Pourquoi la popularité de e n'est pas estimée à partir de wikipédia (ou le dico) comme l'association mention-entité ?
 
 **Voir aussi**:
-  * aria/dataless intent recognition/2019 Knowledge-Based Dataless Text Categorization
-  * aria/dataless intent recognition/2019 Knowledge-Based Short Text Categorization Using Entityand Category Embedding
+  * dataless intent recognition/2019 Knowledge-Based Dataless Text Categorization
+  * dataless intent recognition/2019 Knowledge-Based Short Text Categorization Using Entityand Category Embedding
   * 2018 TECNE - Knowledge Based Text ClassificationUsing Network Embeddings
   * Pour la méthode de minimisation de O_{heter}, 2015 PTE-PredictiveTextEmbeddingthroughLarge-scaleHeterogeneousTextNetworks
 
@@ -323,7 +323,7 @@ L'entraînement est une boucle de génération ou màj d'annotations et d'estima
 
 
 
-## aria/less annotation/data augmentation
+## dataless annotation/data augmentation
  
 ### 2020 When does data augmentation help generalization in NLP [EN COURS][PRIORITAIRE]
 **Problème**
@@ -350,7 +350,7 @@ L'entraînement est une boucle de génération ou màj d'annotations et d'estima
 **Code**: https://github.com/jasonwei20/eda_nlp
 
 
-## aria/less annotation/Weak supervision
+## dataless annotation/Weak supervision
 
 ### 2019 A clinical text classification paradigm using weak supervision and deep representation [FINI]
 L'article présente une méthode simple pour adresser l'absence de données annotées pour une tâche de classification de textes de rapports cliniques. Il propose de construire une base d'entraînement à l'aide d'une méthode à base de REGEX. Le principe est de conclure en l'appartenance d'un document à une catégorie sir une phrase de ce doc comprend un mot-clé ou une combinaison de mots-clés prédéfinis pour cette catégorie (e.g. **uses tobacco** pour la classe **smoker**). Le jeu d'entraînement est donc potentiellement bruité et ne couvre que les motifs de mots-clés prédéfinis. Pour être robuste aux mots-clés inconnus, le modèle vectoriel emploi les embeddings de mots qui rapprochent les mots inconnus des connus. En effet, le vecteur d'un texte est la moyenne des embeddings des mots qu'il comprend (occurrence ou **type** (le doc est défini comme un ensemble de mots)?). Les expérimentations montrent de très bonnes performances en classification binaire avec le CNN (F1 à 0.92 & 0.97  pour 0.91 & 0.93 pour les règles) avec la quantité de données d'entraînement disponible (31861  et 22471) mais moins bonnes (0.77 pour 0.88 pour les règles) en multi-classe (5 classes) pour deux raisons : (1) faible quantité de données (389), (2) un important déséquilibre du jeu annoté (deux classes couvrant seuelement 5%).
@@ -362,45 +362,7 @@ L'article présente une méthode simple pour adresser l'absence de données anno
 *  **Avantage**:
   * l'augmentation de données annotées améliorera les performances de classification
 
-
-## aria/knowledge graph
-
-### 2017 Graph-based_Text_Representations_Tutorial_EMNLP_2017 [TURORIEL][FINI][A RESUMER]
-
-**Objectifs**: Booster la fouille de textes, le TALN, et la RI avec les graphes
-
-**Problèmes de la représentation par BoW**: hypothèse d'indépendance entre termes et pondération par fréquence de termes
-
-**Intérêt de la représentation de texte par graphe**: capturer la **dépendance** entre les termes, de leur **ordre** et la **distance** entre eux.
-
-
-## aria/query analysis
-
-### 2018_Chapter_UnderstandingInformationNeeds [SUSPENDU]
-
-en RI, la compréhension de l'information nécessitée par l'utilisateur passe par une bonne compréhension de sa requête. Pour cela, il existent des techniques comme la classification de la requête suivant des buts de niveau élevé (intention), segmentation en parties allant ensemble (e.g. noms composés), interpréter la structure de la requête, reconaître et désambiguïser les entités mentionnées, déterminer si un service spécifique ou un segment/domaine des contenus en ligne (*verticals*, e.g. shopping, voyage, recherche d'emploi, etc.) doit être invoqué.
-
-#### Analyse sémantique de requête
-
-**Classification de requête**
-
-**Annotation de requête**
-
-**Interprétation de requête**
-
-## aria\short texts similarity\metric learning
-
-### 2019 ATutorialonDistanceMetricLearning-MathematicalFoundationsAlgorithmsandExperiments [EN COURS]
-
-*  Une distance standard peut ignorer des propriétés importantes dans le dataset = son utilisation par un apprentissage rendant ce dernier non optimal
-*  L'objectif de l'apprentissage d'une distance, c'est de rapprocher autant que possible les objets similaires, tout en éloignant les différents, pour améliorer la qualité des applications 
-*  Les bases de l'apprentissage de distance sont :
-  *  **l'analyse convexe** : pour la présentation et la résolution de pbs d'optimisation (estimation de paramètres)
-  *  **l'analyse matricielle** : pour la compréhension de la discipline, la paramétrisation des algo, et l'optimisation par les vecteurs propres
-  *  **la théorie de l'information** : qui a motivé plusieurs des algorithmes
-  
-  
-## aria/embeddings
+## embeddings
 
 ### 2014 GloVe - Global Vectors for Word Representation
 
@@ -646,12 +608,33 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 * slides: https://yumeng5.github.io/files/kdd20-tutorial/Part1.pdf
 
 
-## aria/classification methods
+## knowledge graph
 
-### 2016 NBSVM-Weka [MULTICLASS ADAPTATION]
+### 2017 Graph-based_Text_Representations_Tutorial_EMNLP_2017 [TURORIEL][FINI][A RESUMER]
+
+**Objectifs**: Booster la fouille de textes, le TALN, et la RI avec les graphes
+
+**Problèmes de la représentation par BoW**: hypothèse d'indépendance entre termes et pondération par fréquence de termes
+
+**Intérêt de la représentation de texte par graphe**: capturer la **dépendance** entre les termes, de leur **ordre** et la **distance** entre eux.
 
 
-## aria/short texts similarity
+## query analysis
+
+### 2018_Chapter_UnderstandingInformationNeeds [SUSPENDU]
+
+en RI, la compréhension de l'information nécessitée par l'utilisateur passe par une bonne compréhension de sa requête. Pour cela, il existent des techniques comme la classification de la requête suivant des buts de niveau élevé (intention), segmentation en parties allant ensemble (e.g. noms composés), interpréter la structure de la requête, reconaître et désambiguïser les entités mentionnées, déterminer si un service spécifique ou un segment/domaine des contenus en ligne (*verticals*, e.g. shopping, voyage, recherche d'emploi, etc.) doit être invoqué.
+
+#### Analyse sémantique de requête
+
+**Classification de requête**
+
+**Annotation de requête**
+
+**Interprétation de requête**
+
+
+## short texts similarity
 
 ### 2019 Sentence Similarity Techniques for Short vs Variable Length Textusing Word Embeddings [FINI]*
 **Problème**: Comment estimer la similarité sémantique entre une phrase S1 courte (1-3 mots e.g. des commandes courtes comme "*supprimer la commande*" ou "*montrer les éléments récents*") et une autre phrase S2 plus grande ?
@@ -667,7 +650,6 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 * problème dans le dev de chatbot:
   * nécessité d'un grand nombre de données annotées d'entrainement
   * gestion perpétuelle de plusieurs données à chaque prédiction : complexe et chèr en temps 
-
 
 **Proposition1: fenêtre coulissante avec moyenne pondérée des vecteurs de mots**
 * taille_fenetre = nombre de mot de S1 (la phrase la plus courte)
@@ -687,8 +669,17 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 * le seuil minimal de similarité est fixé à 0.9
 * proposition1 beaucoup moins bonne que la proposition 2 (F1-score de 0.3708 contre 0.9316, et 0.1451 pour le cos_sim Google's Universal Sentence Encoding)
 
+## short texts similarity / metric learning
 
-## aria / short texts similarity / metric learning
+### 2019 ATutorialonDistanceMetricLearning-MathematicalFoundationsAlgorithmsandExperiments [EN COURS]
+
+*  Une distance standard peut ignorer des propriétés importantes dans le dataset = son utilisation par un apprentissage rendant ce dernier non optimal
+*  L'objectif de l'apprentissage d'une distance, c'est de rapprocher autant que possible les objets similaires, tout en éloignant les différents, pour améliorer la qualité des applications 
+*  Les bases de l'apprentissage de distance sont :
+  *  **l'analyse convexe** : pour la présentation et la résolution de pbs d'optimisation (estimation de paramètres)
+  *  **l'analyse matricielle** : pour la compréhension de la discipline, la paramétrisation des algo, et l'optimisation par les vecteurs propres
+  *  **la théorie de l'information** : qui a motivé plusieurs des algorithmes
 
 ### 2019 Metric Learning for Dynamic Text Classification [EN COURS]
+  
 
