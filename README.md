@@ -349,6 +349,12 @@ L'entraînement est une boucle de génération ou màj d'annotations et d'estima
 
 **Code**: https://github.com/jasonwei20/eda_nlp
 
+**voir aussi**
+* https://towardsdatascience.com/text-data-augmentation-makes-your-model-stronger-7232bd23704
+* https://medium.com/opla/text-augmentation-for-machine-learning-tasks-how-to-grow-your-text-dataset-for-classification-38a9a207f88d
+* https://towardsdatascience.com/data-augmentation-for-text-data-obtain-more-data-faster-525f7957acc9
+* https://towardsdatascience.com/text-classification-with-extremely-small-datasets-333d322caee2?gi=16ddf2ae2aa6
+
 
 ## dataless annotation/Weak supervision
 
