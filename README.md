@@ -2,6 +2,63 @@
 Notes de lectures d'articles et de rapports scientifiques
 
 
+## Evaluation
+
+### 2020-DamirKrstinić-MultiLabelClassifPerfEvalWithConfusionMatrix.pdf 
+**Problème** : comment estimer et interpréter l'efficacité d'une approche de classification multi-label (MLC) avec une matrice de confusion ?
+
+**Solution**: l'article propose une nouvelle approche pour calculer la matrice de confusion pour la classif multi-label:
+* l'approche comble les lacunes des approches existantes
+* Grâce à sa polyvalence (*abilité à s'adapté ou être adaptable à différentes fonctions ou activités*) elle peut donc être employée dans différents domaines
+
+**contexte**
+* Difficultés des algos MLC: 
+  * affecter plus d'un concept sémantique à chaque instance
+  * existence d'une correlation entre différents labels
+  * nombre inégal d'occurrences de labels dans les données (déséquilibre d'annotation de train)
+	* chaque label n'a pas le même nombre d'instances : certains sont très sollicités/courants quand d'autres peuvent être rares en réalité et n'apparaitre que dans une très faible proportion des exemples
+	* chaque instance n'a pas le même nombre de labels
+  * différents labels sont souvent très similaires dans le contexte de certaines instances ; ce qui rend difficile leur annotation non ambigüe même par un humain
+    * en plus de l'efficacité des algos, il faut **revéler les relations entre labels** et **indiquer clairement la faiblesse du classifieur (les ktqs du pb qui biaise ou handicape l'algo)** ==> **grâce à la matrice de confusion**
+* La classif multi-label : entrainer une fonction pour prédire un vecteur binaire à dim defini par les labels (1 si le label est pertinent, 0 sinon 
+* Les **metriques couramment utilisées** distinguent l'éval basée sur les labels et celle basée sur les exemples pour un système H et un jeu de test D de taille n et un nb de labels candidats q:
+  * eval basée sur les exemples :
+    * Justesse_EB(H, D) = (1/n)(\sum_{i=1}^n |Yi \inter Z_i|/|Yi \union Z_i| : proportion des labels correctement prédits 
+	* Precision_EB(H, D) = (1/n)(\sum_{i=1}^n |Yi \inter Z_i|/|Z_i| : proportion de labels correctement prédits par le total de labels prédits
+	* Rappel_EB(H, D) = (1/n)(\sum_{i=1}^n |Yi \inter Z_i|/|Yi| : proportion de labels correctement prédits par le total de labels attendus
+	* F1_EB(H, D) = (2*Precision_EB*Rappel_EB)/(Precision_EB + Rappel_EB) =  (1/n)(\sum_{i=1}^n 2*|Yi \inter Z_i|/|Yi XOR Z_i|
+	* HammingLoss_EB(H, D) = (1/n)(\sum_{i=1}^n |Yi \inter Z_i|/q : estime le nb moyen de fois où la pertinence d'un example pour un label est incorrectement prédit i.e. il y a prise en compte de l'erreur de prédiction (un label incorrect est prédit) et l'erreur de manquement (un label pertinent n'est pas prédit).
+	* Justesse de sous-ensemble (**subset accuracy**) ou correspondance exacte (**exact match**) : (1/n) \sum_{i=1}^n I(Y_i=Z_i)
+  * eval basée sur les labels : les labels sont considérés comme séparés, réduisant le MLC à un classifieur binaire pour chaque label avec des TP, TN, TN, FN
+    * Justesse_j = (TP_j + TN_j) / (TP_j + TN_j + FP_j + FN_j)
+	* Precision_j = (TP_j) / (TP_j + FP_j)
+	* Rappel_j = (TP_j) / (TP_j + FN_j)
+	* F1_j = (2*Precision_j*Rappel_j)/(Precision_j + Rappel_j) = 2*TP_j / (2TP_j + FP_j + FN_j)
+	* Moyenne macro d'une metrique B: B_macro(H, D) = (1/q) \sum_{j=1}^q B_j
+	Moyenne micro d'une metrique B: B_micro(H, D) = (1/q) B(\sum_{j=1}^q TP_j, \sum_{j=1}^q TN_j, \sum_{j=1}^q FP_j, \sum_{j=1}^q FN_j)
+* La matrice de confusion est complémentaire à ces métriques car :
+  * elle revèle que les instances d'un label sont souvent classés par erreur avec un autre label qu'on peut bien identifier ; ce qui **suggère au concepteur d'améliorer l'algo en cherchant plus de ktqs qui pourraient aider à mieux distinguer les labels confondus**.
+  * son analyse pourrait :
+    * fournir un aperçu des relations entre ktqs et objets de données différentes dfts
+	* revéler la structure inhérente des données.
+* la matrice de confusion compare la classe prédite définissant une colonne et la classe attendue définissant une ligne:
+  * la cellule (Y, Z) est le nb de fois qu'un objet de la classe Y est affecter à la classe Z
+  * la diagonale représente le nb de classif précise pour chaque classe quand les élts hors-diagonal sont les erreurs de classif.
+* On peut aussi **normaliser** la matrice de confusion:
+  * la **matrice de rappel** est la division de chaque cellule par la somme de tous les élts de la même ligne
+    * en diagonal, on obtient le rappel de chaque classe
+	* les autres éléments de la même ligne, représente la probabilité qu'un objet de la classe Y (ligne) sera classé par erreur dans Z (colonne)
+  * la **matrice de précision** est la division de chaque cellule par la somme de tous les élts de la même colonne
+    * en diagonal, on obtient la précision de chaque classe
+	* les autres éléments de la même colonne, représente la probabilité qu'un objet classé dans Z (colonne ou prédit) est effectivement de la classe Y (ligne ou attendu)
+ 
+**Algo proposé pour la construction de la matrice de confusion en MLC**:
+* **condition d'application** : chaque instance a au moins un label i.e. |Y|>0 **et** |Z|>0 ;  *peut-être créer un label OUT-OF-DOMAIN en plus pour les cas sans label*
+* 4 scénarios pour une instance x :
+  * 𝑌 = Z : C(x) = diag(Y)
+  * |𝑌\𝑍| = 0, |𝑍\𝑌| > 0 : 𝐶 = [𝑌 ⊗ (𝑍\ 𝑌) + |𝑌| ⋅ 𝑑𝑖𝑎𝑔(𝑌) ]/|𝑍| avec ⊗ = le outer product ??
+  * |𝑌\𝑍| > 0, |𝑍\𝑌| = 0 : 𝐶 = [(𝑌\𝑍) ⊗ 𝑍]/|𝑍| + 𝑑𝑖𝑎𝑔(𝑍)
+  * |𝑌\𝑍| > 0, |𝑍 \𝑌| > 0 : 𝐶 = [(𝑌\𝑍) ⊗ (𝑍\𝑌)]/|𝑍\𝑌| + 𝑑𝑖𝑎𝑔(𝑌 ∩ 𝑍)
 ## dataless intent recognition
 **Problème** : absence de données annotées pour entrainer des algo de NLP
 
