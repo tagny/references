@@ -748,5 +748,13 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
   *  **la théorie de l'information** : qui a motivé plusieurs des algorithmes
 
 ### 2019 Metric Learning for Dynamic Text Classification [EN COURS]
-  
+**problème** : en classif de textes, des labels peuvent parfois être ajoutés ou supprimés dans le temps => **classif dynamique**
+
+**solution proposée** : remplacer la couche de sortie de classif des réseaux de neurones par un **espace métrique appris à moindre coût et sématiquement significatif** pour améliorer les performances du kNN
+
+**context**:
+* pb des classifs traditionnelles:
+  * sortie de taille fixe == nb de labels i.e ajout / suppr de label ==> changer l'architecture du model
+  * impossible de réutiliser les paramètres déjà appris ==> pb car les nvls classes n'ont souvent que très peu de données
+  * pas d'exploitation de l'info entre label ==> affibli l'adaptation aux nouveaux labels
 
