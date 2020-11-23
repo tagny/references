@@ -89,6 +89,11 @@ Notes de lectures d'articles et de rapports scientifiques
     * et séparation des classes vues et classes non vues
 3. Evaluation: ?
 
+**voir aussi**
+* code source : https://github.com/CogComp/BenchmarkingZeroShot
+* démo en ligne : https://cogcomp.seas.upenn.edu/page/demo_view/ZeroShotTextClassification
+* Présentation à EMNLP : https://vimeo.com/409401114
+
 ### 2020-YuMeng-TextClassifUsingLabelNamesOnlyALangModelSelfTrainingApproach
 **Pb**: 
 * les algos actuels ont besoin d'un bon jeu de données annotées par des humains
@@ -758,3 +763,13 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
   * impossible de réutiliser les paramètres déjà appris ==> pb car les nvls classes n'ont souvent que très peu de données
   * pas d'exploitation de l'info entre label ==> affibli l'adaptation aux nouveaux labels
 
+## misc-suggested
+
+### 2020-LuyuGao-ModularizedTransfomerBasedRankingFramework
+
+**voir aussi**:
+* présentation vidéo : https://slideslive.com/38939359
+* code TBA : https://github.com/luyug/MORES
+
+
+### 2020-MujeenSung-BiomedicalEntityReprWithSynonymMarginalization
