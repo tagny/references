@@ -1,31 +1,31 @@
-https://academicpositions.fr/ad/university-of-luxembourg/2020/research-associate-postdoc-in-natural-language-processing-and-machine-learning/149680
-https://academicpositions.fr/find-jobs/Post%20doc-in-all-by-all-in-all/nlp/1
-https://aclweb.org/aclwiki/Employment_opportunities,_postdoctoral_positions,_summer_jobs
-https://afia.asso.fr/formulaire-de-recherche-afia/?obj_t=job_offer
-https://emploi.cnrs.fr/Offres/CDD/UPR3251-ANNLIG-001/Default.aspx
-https://en.academicpositions.se/find-jobs/
-https://euraxess.ec.europa.eu/jobs/search?keywords=nlp
-https://europe.naverlabs.com/job/natural-language-processing-researcher/
-https://europe.naverlabs.com/job/senior-research-scientist-in-retrieval-and-recommendation/
-https://fr.linkedin.com/jobs/natural-language-processing-emplois?position=1&pageNum=0
-https://jobs.inria.fr/public/classic/fr/offres#paginate-1
-https://jobs.atos.net/search/?createNewAlert=false&q=data&locationsearch=montpellier&optionsFacetsDD_country=&optionsFacetsDD_city=&optionsFacetsDD_customfield2=&optionsFacetsDD_customfield3=&optionsFacetsDD_department=
-https://jobtensor.com/Python-Nlp-Jobs?lang=en
-https://linguistlist.org/jobs/browse-jobs.cfm
-https://nlppeople.com/
-https://scholarshipdb.net/NLP-scholarships
-http://w3.erss.univ-tlse2.fr/membre/tanguy/offres.html
-http://www-expression.irisa.fr/job-offers/
-https://www.abg.asso.fr/fr/candidatOffres
-https://www.aijobs.tech/fr/j/t/emplois-natural-language-processing+nlp/
-https://www.eurosciencejobs.com/job_search/category/data_science
-https://www.facebook.com/careers/jobs/
-https://www.glassdoor.fr/Emploi/data-scientist-emplois-SRCH_KO0,14.htm
-https://jobs.sciencecareers.org/job/523116/postdoc-natural-language-processing-text-mining-at-dtu-biosustain/
-https://www.indeed.co.uk/Natural-Language-Processing-jobs
-https://www.informatics-europe.org/services/informatics-job-platform.html
-https://www.isca-speech.org/iscajob/jobs.php
-https://www.madics.fr/offres/
-https://www.postdocjobs.com/job/employer/view?id=403406
-https://www.totaljobs.com/jobs/postdoc/in-europe
-https://www.welcometothejungle.com/fr/jobs
+* https://academicpositions.fr/ad/university-of-luxembourg/2020/research-associate-postdoc-in-natural-language-processing-and-machine-learning/149680
+* https://academicpositions.fr/find-jobs/Post%20doc-in-all-by-all-in-all/nlp/1
+* https://aclweb.org/aclwiki/Employment_opportunities,_postdoctoral_positions,_summer_jobs
+* https://afia.asso.fr/formulaire-de-recherche-afia/?obj_t=job_offer
+* https://emploi.cnrs.fr/Offres/CDD/UPR3251-ANNLIG-001/Default.aspx
+* https://en.academicpositions.se/find-jobs/
+* https://euraxess.ec.europa.eu/jobs/search?keywords=nlp
+* https://europe.naverlabs.com/job/natural-language-processing-researcher/
+* https://europe.naverlabs.com/job/senior-research-scientist-in-retrieval-and-recommendation/
+* https://fr.linkedin.com/jobs/natural-language-processing-emplois?position=1&pageNum=0
+* https://jobs.inria.fr/public/classic/fr/offres#paginate-1
+* https://jobs.atos.net/search/?createNewAlert=false&q=data&locationsearch=montpellier&optionsFacetsDD_country=&optionsFacetsDD_city=&optionsFacetsDD_customfield2=&optionsFacetsDD_customfield3=&optionsFacetsDD_department=
+* https://jobtensor.com/Python-Nlp-Jobs?lang=en
+* https://linguistlist.org/jobs/browse-jobs.cfm
+* https://nlppeople.com/
+* https://scholarshipdb.net/NLP-scholarships
+* http://w3.erss.univ-tlse2.fr/membre/tanguy/offres.html
+* http://www-expression.irisa.fr/job-offers/
+* https://www.abg.asso.fr/fr/candidatOffres
+* https://www.aijobs.tech/fr/j/t/emplois-natural-language-processing+nlp/
+* https://www.eurosciencejobs.com/job_search/category/data_science
+* https://www.facebook.com/careers/jobs/
+* https://www.glassdoor.fr/Emploi/data-scientist-emplois-SRCH_KO0,14.htm
+* https://jobs.sciencecareers.org/job/523116/postdoc-natural-language-processing-text-mining-at-dtu-biosustain/
+* https://www.indeed.co.uk/Natural-Language-Processing-jobs
+* https://www.informatics-europe.org/services/informatics-job-platform.html
+* https://www.isca-speech.org/iscajob/jobs.php
+* https://www.madics.fr/offres/
+* https://www.postdocjobs.com/job/employer/view?id=403406
+* https://www.totaljobs.com/jobs/postdoc/in-europe
+* https://www.welcometothejungle.com/fr/jobs
