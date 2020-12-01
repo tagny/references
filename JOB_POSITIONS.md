@@ -8,6 +8,8 @@
 * https://europe.naverlabs.com/job/natural-language-processing-researcher/
 * https://europe.naverlabs.com/job/senior-research-scientist-in-retrieval-and-recommendation/
 * https://fr.linkedin.com/jobs/natural-language-processing-emplois?position=1&pageNum=0
+* https://joblift.fr/Emplois-pour-nlp
+* https://fr.jobrapido.com/
 * https://jobs.inria.fr/public/classic/fr/offres#paginate-1
 * https://jobs.atos.net/search/?createNewAlert=false&q=data&locationsearch=montpellier&optionsFacetsDD_country=&optionsFacetsDD_city=&optionsFacetsDD_customfield2=&optionsFacetsDD_customfield3=&optionsFacetsDD_department=
 * https://jobtensor.com/Python-Nlp-Jobs?lang=en
