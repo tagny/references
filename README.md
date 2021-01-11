@@ -773,3 +773,13 @@ en RI, la compréhension de l'information nécessitée par l'utilisateur passe p
 
 
 ### 2020-MujeenSung-BiomedicalEntityReprWithSynonymMarginalization
+
+
+## speech recognition
+
+### 2020-MLSALargeScaleMultilingualDatasetForSpeechResearch-VineelPratap
+
+**voir aussi** : 
+* wav2vec : https://github.com/pytorch/fairseq/tree/master/examples/wav2vec
+* ASR avec wav2vec : https://github.com/facebookresearch/flashlight/tree/master/flashlight/app/asr
+* [Massively Multilingual ASR: 50 Languages, 1 Model, 1 Billion Parameters](https://arxiv.org/pdf/2007.03001.pdf)
