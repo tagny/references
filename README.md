@@ -8,6 +8,7 @@ Notes de lectures d'articles et de rapports scientifiques
 	- [Evaluation](#evaluation)
 		- [2020-DamirKrstinić-MultiLabelClassifPerfEvalWithConfusionMatrix.pdf](#2020-damirkrstini-multilabelclassifperfevalwithconfusionmatrixpdf)
 	- [dataless intent recognition](#dataless-intent-recognition)
+		- [2020-ExploitingClozeQuestionsForFewShotTextClassifAndNLI-Schick](#2020-ExploitingClozeQuestionsForFewShotTextClassifAndNLI-Schick)
 		- [2019-WenpengYin-BenchmarkingZeroshotTextClassificationDatasetsEvaluationAndEntailmentApproach](#2019-wenpengyin-benchmarkingzeroshottextclassificationdatasetsevaluationandentailmentapproach)
 		- [2020-YuMeng-TextClassifUsingLabelNamesOnlyALangModelSelfTrainingApproach](#2020-yumeng-textclassifusinglabelnamesonlyalangmodelselftrainingapproach)
 		- [2018 Doc2Cube - Allocating Documents to Text Cube without Labeled Data [En cours]](#2018-doc2cube-allocating-documents-to-text-cube-without-labeled-data-en-cours)
@@ -121,6 +122,9 @@ Notes de lectures d'articles et de rapports scientifiques
   * |𝑌\𝑍| = 0, |𝑍\𝑌| > 0 : 𝐶 = [𝑌 ⊗ (𝑍\ 𝑌) + |𝑌| ⋅ 𝑑𝑖𝑎𝑔(𝑌) ]/|𝑍| avec ⊗ = le outer product ??
   * |𝑌\𝑍| > 0, |𝑍\𝑌| = 0 : 𝐶 = [(𝑌\𝑍) ⊗ 𝑍]/|𝑍| + 𝑑𝑖𝑎𝑔(𝑍)
   * |𝑌\𝑍| > 0, |𝑍 \𝑌| > 0 : 𝐶 = [(𝑌\𝑍) ⊗ (𝑍\𝑌)]/|𝑍\𝑌| + 𝑑𝑖𝑎𝑔(𝑌 ∩ 𝑍)
+  
+  
+
 ## dataless intent recognition
 **Problème** : absence de données annotées pour entrainer des algo de NLP
 
@@ -130,6 +134,24 @@ Notes de lectures d'articles et de rapports scientifiques
   * bon si données non annotées indisponibles
 * **weak supervision** : générer automatiquement des données (par exemple avec un système de règles REGEX)
   * bon si textes brutes dispo et expertise de mots-clés dispo
+
+
+### 2020-ExploitingClozeQuestionsForFewShotTextClassifAndNLI-Schick
+
+**Question pour orienter la lecture**: 
+  * What is a cloze question?
+  * What do cloze questions have to do with text classification and natural language inference?
+  * The paper deals with few shot text classification and NLI, how does it do that?
+  * Is the approach pretrainabled on an other task dataset for the purpose of a zero-shot learning ?
+  * why do we need few training data ?
+  * Is the source code provided ?
+  * Are all the resources provided (pretrained model, data, ...) ? For what languages ?
+  * Is it simple to apply it?
+  * How good is the approach compared to others?
+  
+**Pbs**: few-shot learning == leverage some few examples to address the limit of unsupervised learning solutions based on language models and task descriptions
+
+
 
 ### 2019-WenpengYin-BenchmarkingZeroshotTextClassificationDatasetsEvaluationAndEntailmentApproach
 **Pb**: 0shot-tc == affecter le label approprié à un morceau de texte indépendament du domaine et de l'aspect textuel décrit par le label.
@@ -491,6 +513,7 @@ L'article présente une méthode simple pour adresser l'absence de données anno
   * quantité suffisante de textes à annoter pour le deep learning (CNN)
 *  **Avantage**:
   * l'augmentation de données annotées améliorera les performances de classification
+
 
 ## embeddings
 
