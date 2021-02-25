@@ -149,8 +149,24 @@ Notes de lectures d'articles et de rapports scientifiques
   * Is it simple to apply it?
   * How good is the approach compared to others?
   
-**Pbs**: few-shot learning == leverage some few examples to address the limit of unsupervised learning solutions based on language models and task descriptions
+**Pbs**: 
+* few-shot learning == leverage some few examples to address the limit of unsupervised learning solutions based on language models and task descriptions
+* comment combiner la description d'une tâche et l'apprentissage supervisé régulier sur un faible dataset annoté ?
 
+**Approches précédentes**
+* des solutions récentes sont proposées en zero-shot : voir (Radford
+et al., 2019; Puri and Catanzaro, 2019)
+* les approches précédentes utilisant des patrons le font pour définir le modèle de langue et non pour améliorer une tâche spécifique.
+
+**proposition**: Entrainement par exploitation de patrons (motifs)
+* reformulation de texte entrée en textes à trous suivant des patrons du NLP
+
+**voir aussi**
+* https://towardsdatascience.com/gpt-3-vs-pet-not-big-but-beautiful-7a73d17af981
+* http://timoschick.com/explanatory%20notes/2020/10/23/pattern-exploiting-training.html [DETAILED][MORE EXAMPLES]
+* https://inderjit.in/post/pet_for_nlp/
+* https://www.aclweb.org/anthology/2020.coling-main.488.pdf
+* https://www.pragmatic.ml/pet/ [PEDAGOGIC]
 
 
 ### 2019-WenpengYin-BenchmarkingZeroshotTextClassificationDatasetsEvaluationAndEntailmentApproach
